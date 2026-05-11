@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://cmmnirqgtvea2"]
+
+[ext_resource type="Script" uid="uid://cj7alhaqs4vup" path="res://scripts/bat_player.gd" id="1_5n6vd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("soundwave_spawn")]
+script = ExtResource("1_5n6vd")
+soundwave_spawn = NodePath("CollisionShape2D/Node2D/Marker2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1842205770]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_go7nf")
+
+[node name="Node2D" type="Node2D" parent="CollisionShape2D" unique_id=564757985]
+
+[node name="ColorRect" type="ColorRect" parent="CollisionShape2D/Node2D" unique_id=93982794]
+offset_left = -9.704945
+offset_top = -14.65313
+offset_right = 9.863251
+offset_bottom = 14.496468
+color = Color(0.37413925, 0.37413928, 0.37413922, 1)
+
+[node name="Marker2D" type="Marker2D" parent="CollisionShape2D/Node2D" unique_id=907834147]
+position = Vector2(-6.556708e-07, -15)
+rotation = -1.5707964
