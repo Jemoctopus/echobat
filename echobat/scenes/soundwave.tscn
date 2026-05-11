@@ -2,19 +2,21 @@
 
 [ext_resource type="Script" uid="uid://cg01hcg5krn35" path="res://scripts/soundwave.gd" id="1_5eq6b"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x173g"]
-size = Vector2(10, 10)
+[sub_resource type="CircleShape2D" id="CircleShape2D_5eq6b"]
+radius = 5.0990195
 
 [node name="Node2D" type="Node2D" unique_id=1746745061]
 script = ExtResource("1_5eq6b")
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1615042443]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=30671844]
-shape = SubResource("RectangleShape2D_x173g")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1003094616]
 offset_left = -5.0
 offset_top = -5.0
 offset_right = 5.0
 offset_bottom = 5.0
+
+[node name="Area2D" type="Area2D" parent="." unique_id=307420963]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1426766321]
+shape = SubResource("CircleShape2D_5eq6b")
+
+[connection signal="body_entered" from="Area2D" to="." method="echolocation_detection"]

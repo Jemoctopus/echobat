@@ -11,3 +11,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	move_local_x(SPEED * delta)
 	
+
+
+func echolocation_detection(body: Node2D) -> void:
+	if body == TileMapLayer:
+		print("TILEMAP")
