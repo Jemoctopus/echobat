@@ -14,6 +14,10 @@ config/name="echobat"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[global_group]
+
+tilemaps=""
+
 [input]
 
 ui_accept={
