@@ -29,8 +29,13 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	if Input.is_action_just_pressed("fire_soundwave"):
-		var soundwave = soundwave_scene.instantiate()
-		soundwave.position = soundwave_spawn.global_position
-		soundwave.rotation = $Node2D.rotation
-		add_sibling(soundwave)
+		var angle = $Node2D.rotation
+		summon_soundwave(angle)
 	move_and_slide()
+
+
+func summon_soundwave(angle):
+	var soundwave = soundwave_scene.instantiate()
+	soundwave.position = soundwave_spawn.global_position
+	soundwave.rotation = angle
+	add_sibling(soundwave)
