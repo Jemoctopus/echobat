@@ -18,6 +18,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	scale += Vector2(0.1, 0.1)
 	move_local_x(SPEED * delta)
 	if tilemap:
 		current_position =  tilemap.local_to_map(global_position)
@@ -36,7 +37,7 @@ func tilechecker(cell: Array[Vector2i]) -> void:
 		if not tilemap.get_cell_atlas_coords(tile) == Vector2i(-1, -1):
 			used_cells.append(tile)
 	tilemap.set_cells_terrain_connect(used_cells, terrain_set_test, terrain_test, true)
-	queue_free()
+
 
 
 # The detection in which I will use echolocation

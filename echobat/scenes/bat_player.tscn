@@ -6,10 +6,12 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
 height = 32.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("soundwave_spawn")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "bat_body")]
 script = ExtResource("1_5n6vd")
 soundwave_scene = ExtResource("2_1ny5b")
-soundwave_spawn = NodePath("Node2D/Marker2D")
+right_soundwave_spawn = NodePath("Node2D/right Marker")
+left_soundwave_spawn = NodePath("Node2D/left Marker")
+bat_body = NodePath("Node2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1842205770]
 rotation = 1.5707964
@@ -24,6 +26,9 @@ offset_right = 16.0
 offset_bottom = 10.0
 color = Color(0.37413925, 0.37413928, 0.37413922, 1)
 
-[node name="Marker2D" type="Marker2D" parent="Node2D" unique_id=907834147]
+[node name="right Marker" type="Marker2D" parent="Node2D" unique_id=907834147]
 position = Vector2(15.999999, 0)
 rotation = -1.5707964
+
+[node name="left Marker" type="Marker2D" parent="Node2D" unique_id=16018327]
+position = Vector2(-16, 0)
