@@ -11,6 +11,7 @@ var terrain_set_test = 0
 var go_for: int ## The amount of time the soundwave goes for
 var touching_tiles = false
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tilemap = get_tree().get_first_node_in_group("tilemaps")
