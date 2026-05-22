@@ -5,8 +5,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5eq6b"]
 radius = 5.0990195
 
-[node name="Node2D" type="Node2D" unique_id=1746745061]
+[node name="Node2D" type="Node2D" unique_id=1746745061 node_paths=PackedStringArray("timer_despawner")]
 script = ExtResource("1_5eq6b")
+timer_despawner = NodePath("limited time")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1003094616]
 offset_left = -5.0
@@ -19,5 +20,8 @@ offset_bottom = 5.0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1426766321]
 shape = SubResource("CircleShape2D_5eq6b")
 
+[node name="limited time" type="Timer" parent="." unique_id=1824255584]
+
 [connection signal="body_entered" from="Area2D" to="." method="echolocation_detection"]
 [connection signal="body_exited" from="Area2D" to="." method="tilemap_exited"]
+[connection signal="timeout" from="limited time" to="." method="_on_despawner_timeout"]
