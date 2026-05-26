@@ -12,6 +12,7 @@ config_version=5
 
 config/name="echobat"
 config/features=PackedStringArray("4.6", "Forward Plus")
+boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://icon.svg"
 
 [global_group]

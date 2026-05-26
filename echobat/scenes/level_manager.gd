@@ -15,11 +15,10 @@ func _process(delta: float) -> void:
 	pass
 
 
+func recieve_cell_data(cells_from_soundwave) -> void:
+	cell_list.append(cells_from_soundwave)
+	print(cell_list)
+
+
 func cell_reset_timer(cell_list) -> void:
 	await get_tree().create_timer(5.0).timeout
-
-
-
-func reset_cell(cell_list) -> void:
-	for tile in cell_list:
-		tilemap.set_cell(tile, cell_test, atlas_coord_test)

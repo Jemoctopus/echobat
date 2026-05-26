@@ -12,6 +12,7 @@ const JUMP_VELOCITY = -400.0
 var direction_bat_facing = ["left", "right"]
 var direction_current = direction_bat_facing[1]
 var angle = 0
+var angle_list = [15]
 var soundwave_directions = {
 	"left" : 0,
 	"right" : 180,
@@ -44,13 +45,14 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	if Input.is_action_just_pressed("fire_soundwave"):
-		var top_angle = angle
-		var bottom_angle = angle
-		top_angle += 30
-		bottom_angle -= 30
-		summon_soundwave(angle)
-		summon_soundwave(top_angle)
-		summon_soundwave(bottom_angle)
+		for i in angle_list:
+			var top_angle = angle
+			var bottom_angle = angle
+			top_angle += i
+			bottom_angle -= i
+			summon_soundwave(angle)
+			summon_soundwave(top_angle)
+			summon_soundwave(bottom_angle)
 	move_and_slide()
 
 
