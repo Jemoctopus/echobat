@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cmmnirqgtvea2"]
 
 [ext_resource type="Script" uid="uid://cj7alhaqs4vup" path="res://scripts/bat_player.gd" id="1_5n6vd"]
-[ext_resource type="PackedScene" uid="uid://bf7v2o28wtktd" path="res://scenes/soundwave.tscn" id="2_1ny5b"]
+[ext_resource type="PackedScene" uid="uid://bf7v2o28wtktd" path="res://scenes/soundwave_manager.tscn" id="2_1ny5b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
 height = 32.0

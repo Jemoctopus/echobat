@@ -45,14 +45,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	if Input.is_action_just_pressed("fire_soundwave"):
-		for i in angle_list:
-			var top_angle = angle
-			var bottom_angle = angle
-			top_angle += i
-			bottom_angle -= i
-			summon_soundwave(angle)
-			summon_soundwave(top_angle)
-			summon_soundwave(bottom_angle)
+		summon_soundwave(angle)
 	move_and_slide()
 
 

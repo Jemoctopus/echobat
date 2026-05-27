@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bf7v2o28wtktd"]
+
+[ext_resource type="Script" uid="uid://biqcfghkrn7da" path="res://scripts/second_iteration_soundwave.gd" id="1_05m4i"]
+[ext_resource type="PackedScene" uid="uid://biqulekxnu5ii" path="res://scenes/soundwave_edge.tscn" id="2_de8f5"]
+
+[node name="Node2D" type="Node2D" unique_id=1746745061 node_paths=PackedStringArray("marker", "expiration_timer")]
+script = ExtResource("1_05m4i")
+edge_scene = ExtResource("2_de8f5")
+marker = NodePath("Marker2D")
+expiration_timer = NodePath("expiration_timer")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1845130752]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1151385474]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="expiration_timer" type="Timer" parent="." unique_id=1628154429]
+
+[connection signal="timeout" from="expiration_timer" to="." method="_on_expiration_timer_timeout"]
