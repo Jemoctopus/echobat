@@ -1,27 +1,10 @@
 [gd_scene format=3 uid="uid://bf7v2o28wtktd"]
 
-[ext_resource type="Script" uid="uid://cg01hcg5krn35" path="res://scripts/soundwave.gd" id="1_5eq6b"]
+[ext_resource type="Script" uid="uid://biqcfghkrn7da" path="res://scripts/second_iteration_soundwave.gd" id="1_5eq6b"]
+[ext_resource type="PackedScene" uid="uid://biqulekxnu5ii" path="res://scenes/soundwave_edge.tscn" id="2_byk1h"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5eq6b"]
-radius = 5.0990195
-
-[node name="Node2D" type="Node2D" unique_id=1746745061 node_paths=PackedStringArray("timer_despawner")]
+[node name="Node2D" type="Node2D" unique_id=1746745061]
 script = ExtResource("1_5eq6b")
-timer_despawner = NodePath("limited time")
+edge_scene = ExtResource("2_byk1h")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1003094616]
-offset_left = -5.0
-offset_top = -5.0
-offset_right = 5.0
-offset_bottom = 5.0
-
-[node name="Area2D" type="Area2D" parent="." unique_id=307420963]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1426766321]
-shape = SubResource("CircleShape2D_5eq6b")
-
-[node name="limited time" type="Timer" parent="." unique_id=1824255584]
-
-[connection signal="body_entered" from="Area2D" to="." method="echolocation_detection"]
-[connection signal="body_exited" from="Area2D" to="." method="tilemap_exited"]
-[connection signal="timeout" from="limited time" to="." method="_on_despawner_timeout"]
+[node name="Marker2D" type="Marker2D" parent="." unique_id=1845130752]

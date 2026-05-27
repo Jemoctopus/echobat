@@ -2,8 +2,6 @@ extends Node2D
 
 const SPEED = 1000
 
-@export var timer_despawner: Timer
-
 var time_till_despawn = 1.5
 var current_position: Vector2i = Vector2i.ZERO
 var tilemap: TileMapLayer
@@ -39,8 +37,6 @@ var cells_turned = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tilemap = get_tree().get_first_node_in_group("tilemaps")
-	level_manager = get_tree().get_first_node_in_group("level_manager")
-	timer_despawner.start(time_till_despawn)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -60,6 +56,7 @@ func tilechecker(cell: Array[Vector2i]) -> void:
 		var used_cells = []
 		for tile in cell:
 			if tile not in cells_turned:
+				# Checks if tile has already been turned
 				if not tilemap.get_cell_atlas_coords(tile) == Vector2i(-1, -1):
 					used_cells.append(tile)
 		cells_turned = cells_turned + used_cells
@@ -82,6 +79,5 @@ func tilechecker(cell: Array[Vector2i]) -> void:
 func echolocation_detection(body: Node2D) -> void: 
 	if body == tilemap:
 		var neighbour_cells = tilemap.get_surrounding_cells(current_position)
-		print(current_position)
 		neighbour_cells.append(current_position)
 		tilechecker(neighbour_cells)
