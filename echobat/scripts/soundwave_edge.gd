@@ -2,7 +2,7 @@ extends Node2D
 
 const SPEED = 1000
 @export var expiry_timer: Timer
-var time_till_expiry = 1
+var time_till_expiry = 1.5
 
 
 # Called when the node enters the scene tree for the first time.

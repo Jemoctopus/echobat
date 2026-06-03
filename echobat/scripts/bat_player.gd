@@ -12,10 +12,9 @@ const JUMP_VELOCITY = -400.0
 var direction_bat_facing = ["left", "right"]
 var direction_current = direction_bat_facing[1]
 var angle = 0
-var angle_list = [15]
 var soundwave_directions = {
 	"left" : 0,
-	"right" : 180,
+	"right" : 0,
 	"up" : 90,
 	"down": 270
 }
@@ -56,4 +55,5 @@ func summon_soundwave(angle):
 	elif direction_current == direction_bat_facing[1]:
 		soundwave.position = left_soundwave_spawn.global_position
 	soundwave.rotation_degrees = angle
+	soundwave.direction_facing = direction_current
 	add_sibling(soundwave)

@@ -4,12 +4,16 @@ extends Node2D
 @export var marker: Node2D
 @export var expiration_timer: Timer
 
-var angles = deg_to_rad(30)
+var angle_list = [deg_to_rad(220), deg_to_rad(40)]
+var angle_facing = 30
 var expiration_time = 6
+var direction_list = ["left", "right"]
+var direction_facing
 
 var tilemap: TileMapLayer
 var top_soundwave: Node2D
 var bottom_soundwave: Node2D
+
 
 # Terrain Variables
 var terrain_test = {
@@ -41,14 +45,20 @@ var top_position
 var bottom_position
 var current_positions = []
 var previous_positions
+var cells_between = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tilemap = get_tree().get_first_node_in_group("tilemaps")
 	expiration_timer.start(expiration_time)
-	_summon_soundwave(angles)
-	top_soundwave = _summon_soundwave(angles)
-	bottom_soundwave = _summon_soundwave(-angles)
+	
+	# Ensures that the soundwaves are named after their corresponding directions
+	if direction_facing == direction_list[0]:
+		top_soundwave = _summon_soundwave(angle_list[1])
+		bottom_soundwave = _summon_soundwave(-angle_list[1])
+	elif direction_facing == direction_list[1]:
+		top_soundwave = _summon_soundwave(-angle_list[0])
+		bottom_soundwave = _summon_soundwave(angle_list[0])
 
 
 func _summon_soundwave(angle):
@@ -71,17 +81,14 @@ func _process(delta: float) -> void:
 		# Get the cells between the two posistions and then check if the tiles exist.
 		if current_positions != previous_positions:
 			var cell_range = top_position.y - bottom_position.y
-			
 			var used_cells = []
-			for tile in current_positions:
-			# Checks if tile has already been turned
-				if not tilemap.get_cell_atlas_coords(tile) == Vector2i(-1, -1):
-					used_cells.append(tile)
+			for cells_between in range(cell_range):
+				var cell = Vector2i(bottom_position.x, bottom_position.y + cells_between)
+				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
 			var terrain = terrain_ordering_test[current_terrain_ordering]
 			tilemap.set_cells_terrain_connect(used_cells, terrain_set_test, terrain_test[terrain], true)
 		previous_positions = current_positions
-
-
 
 
 func _on_expiration_timer_timeout() -> void:
