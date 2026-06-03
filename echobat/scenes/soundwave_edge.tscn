@@ -4,8 +4,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3sp01"]
 
-[node name="Node2D" type="Node2D" unique_id=1764061670]
+[node name="Node2D" type="Node2D" unique_id=1764061670 node_paths=PackedStringArray("expiry_timer")]
 script = ExtResource("1_3coyb")
+expiry_timer = NodePath("Timer")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=479392250]
 
@@ -17,3 +18,10 @@ offset_left = -10.0
 offset_top = -10.0
 offset_right = 10.0
 offset_bottom = 10.0
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=701560779]
+
+[node name="Timer" type="Timer" parent="." unique_id=1029630877]
+
+[connection signal="draw" from="." to="." method="_on_draw"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

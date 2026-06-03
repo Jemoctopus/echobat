@@ -11,10 +11,7 @@ expiration_timer = NodePath("expiration_timer")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1845130752]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1151385474]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="expiration_timer" type="Timer" parent="." unique_id=1628154429]
 
+[connection signal="draw" from="." to="." method="_on_draw"]
 [connection signal="timeout" from="expiration_timer" to="." method="_on_expiration_timer_timeout"]

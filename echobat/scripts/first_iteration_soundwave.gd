@@ -55,11 +55,9 @@ func tilechecker(cell: Array[Vector2i]) -> void:
 		# Creates new list and then checks if cells are valid, then adds valid cells to the list.
 		var used_cells = []
 		for tile in cell:
-			if tile not in cells_turned:
-				# Checks if tile has already been turned
-				if not tilemap.get_cell_atlas_coords(tile) == Vector2i(-1, -1):
-					used_cells.append(tile)
-		cells_turned = cells_turned + used_cells
+			# Checks if tile has already been turned
+			if not tilemap.get_cell_atlas_coords(tile) == Vector2i(-1, -1):
+				used_cells.append(tile)
 		
 		# Create a terrain variable, so the gradient changes
 		var terrain = terrain_ordering_test[current_terrain_ordering]
