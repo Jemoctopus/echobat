@@ -6,7 +6,7 @@ extends Node2D
 
 var angle_list = [deg_to_rad(210), deg_to_rad(30)]
 var angle_facing = 30
-var expiration_time = 2
+var expiration_time = 1.5
 var direction_list = ["left", "right"]
 var direction_facing
 
@@ -87,23 +87,23 @@ func _process(delta: float) -> void:
 
 
 func _on_expiration_timer_timeout() -> void:
-	pass
-#	var fadeout1 = []
-#	var fadeout2 = []
-#	var fadeout3 = []
-#	var terrain_data
-#	for cells in used_cells:
-#		terrain_data = tilemap.get_cell_tile_data(cells)
-#		terrain_data = terrain_data.terrain
-#		if terrain_data == 0:
-#			fadeout1.append(cells)
-#		elif terrain_data == 1:
-#			fadeout2.append(cells)
-#		elif terrain_data == 2:
-#			fadeout3.append(cells)
-#		elif terrain_data == 3:
-#			tilemap.set_cell(cells, source_id, invisible_tile_atlas_id)
-#			queue_free()
-#	tilemap.set_cells_terrain_connect(fadeout1, terrain_set_test, terrain_test["fadeout1"], true)
-#	tilemap.set_cells_terrain_connect(fadeout2, terrain_set_test, terrain_test["fadeout2"], true)
-#	tilemap.set_cells_terrain_connect(fadeout3, terrain_set_test, terrain_test["fadeout3"], true)
+	var fadeout1 = []
+	var fadeout2 = []
+	var fadeout3 = []
+	var terrain_data
+	if tilemap:
+		for cells in used_cells:
+			terrain_data = tilemap.get_cell_tile_data(cells)
+			terrain_data = terrain_data.terrain
+			if terrain_data == 0:
+				fadeout1.append(cells)
+			elif terrain_data == 1:
+				fadeout2.append(cells)
+			elif terrain_data == 2:
+				fadeout3.append(cells)
+			elif terrain_data == 3:
+				tilemap.set_cell(cells, source_id, invisible_tile_atlas_id)
+				queue_free()
+		tilemap.set_cells_terrain_connect(fadeout1, terrain_set_test, terrain_test["fadeout1"], true)
+		tilemap.set_cells_terrain_connect(fadeout2, terrain_set_test, terrain_test["fadeout2"], true)
+		tilemap.set_cells_terrain_connect(fadeout3, terrain_set_test, terrain_test["fadeout3"], true)

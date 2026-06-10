@@ -72,7 +72,6 @@ func tilechecker(cell: Array[Vector2i]) -> void:
 			tilechecker(neighbour_cells)
 
 
-
 # The detection in which I will use echolocation
 func echolocation_detection(body: Node2D) -> void: 
 	if body == tilemap:
