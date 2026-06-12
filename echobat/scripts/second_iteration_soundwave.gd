@@ -6,7 +6,7 @@ extends Node2D
 
 var angle_list = [deg_to_rad(210), deg_to_rad(30)]
 var angle_facing = 30
-var expiration_time = 1.5
+var expiration_time = 5
 var direction_list = ["left", "right"]
 var direction_facing
 
