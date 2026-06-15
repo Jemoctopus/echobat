@@ -6,7 +6,7 @@ extends Node2D
 
 var angle_list = [deg_to_rad(210), deg_to_rad(30)]
 var angle_facing = 30
-var expiration_time = 5
+var expiration_time = 500
 var direction_list = ["left", "right"]
 var direction_facing
 
@@ -68,6 +68,7 @@ func _summon_soundwave(angle):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	# To be changed for the 
 	if tilemap and top_soundwave and bottom_soundwave:
 		# Get the position of the top and bottom soundwaves
 		top_position =  tilemap.local_to_map(top_soundwave.global_position)
@@ -87,6 +88,7 @@ func _process(delta: float) -> void:
 
 
 func _on_expiration_timer_timeout() -> void:
+	# This will probably not change
 	var fadeout1 = []
 	var fadeout2 = []
 	var fadeout3 = []
