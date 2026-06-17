@@ -9,19 +9,19 @@ const JUMP_VELOCITY = -350.0
 @export var left_soundwave_spawn: Node2D ## The left marker in which we spawn the soundwaves from 
 @export var bat_body: Node2D ## The bats body in which we play visuals and locate the directions
 @export var soundwave_timer: Timer ## The timer which times time inbetween soundwave
+@export var tilemap: TileMapLayer ## The tilemap which the player will change
 
 
 var direction_bat_facing = ["left", "right"]
 var direction_current = direction_bat_facing[1]
-var angle = 0
 var time_between_soundwaves = 2
 var can_shoot_soundwave = true
-var soundwave_directions = {
-	"left" : 0,
-	"right" : 0,
-	"up" : 90,
-	"down": 270
-}
+var left_marker_tiles
+var right_marker_tiles
+var left_setpoint
+var right_setpoint
+var used_cells = []
+var marker_tiles
 
 
 func _physics_process(delta: float) -> void:
@@ -45,30 +45,42 @@ func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
-		if direction == 1:
+		if direction == -1:
 			direction_current = direction_bat_facing[0]
-			angle = soundwave_directions["left"]
-		elif direction == -1:
+		elif direction == 1:
 			direction_current = direction_bat_facing[1]
-			angle = soundwave_directions["right"]
+		
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	if Input.is_action_just_pressed("fire_soundwave"):
 		if can_shoot_soundwave:
-			summon_soundwave(angle)
+			summon_soundwave()
 			soundwave_timer.start(time_between_soundwaves)
 			can_shoot_soundwave = false
+	
+	#if tilemap and velocity > Vector2(0, 0):
+	#	left_setpoint = tilemap.local_to_map(left_soundwave_spawn.global_position)
+	#	right_setpoint =  tilemap.local_to_map(right_soundwave_spawn.global_position)
+	#	left_marker_tiles = tilemap.get_surrounding_cells(left_setpoint)
+	#	left_marker_tiles.append(left_setpoint)
+	#	right_marker_tiles = tilemap.get_surrounding_cells(right_setpoint)
+	#	right_marker_tiles.append(right_setpoint)
+	#	marker_tiles = right_marker_tiles + left_marker_tiles
+	#	for cell in marker_tiles:
+	#		if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+	#			used_cells.append(cell)
+	#	tilemap.set_cells_terrain_connect(used_cells, 0, 0, true)
 	move_and_slide()
 
 
-func summon_soundwave(angle):
+func summon_soundwave():
 	var soundwave = soundwave_scene.instantiate()
 	if direction_current == direction_bat_facing[0]:
 		soundwave.position = right_soundwave_spawn.global_position
 	elif direction_current == direction_bat_facing[1]:
 		soundwave.position = left_soundwave_spawn.global_position
-	soundwave.rotation_degrees = angle
+	soundwave.rotation_degrees = 0
 	soundwave.direction_facing = direction_current
 	add_sibling(soundwave)
 
