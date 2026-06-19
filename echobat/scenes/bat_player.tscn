@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bf7v2o28wtktd" path="res://scenes/soundwave_manager.tscn" id="2_1ny5b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
-height = 32.0
+radius = 8.0
+height = 16.0
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "bat_body", "soundwave_timer")]
 script = ExtResource("1_5n6vd")
@@ -21,18 +22,18 @@ shape = SubResource("CapsuleShape2D_go7nf")
 [node name="Node2D" type="Node2D" parent="." unique_id=564757985]
 
 [node name="ColorRect" type="ColorRect" parent="Node2D" unique_id=93982794]
-offset_left = -16.0
-offset_top = -10.0
-offset_right = 16.0
-offset_bottom = 10.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
 color = Color(0.37413925, 0.37413928, 0.37413922, 1)
 
 [node name="right Marker" type="Marker2D" parent="Node2D" unique_id=907834147]
-position = Vector2(15.999999, 0)
+position = Vector2(8, 0)
 rotation = -1.5707964
 
 [node name="left Marker" type="Marker2D" parent="Node2D" unique_id=16018327]
-position = Vector2(-16, 0)
+position = Vector2(-8, 0)
 
 [node name="Soundwave_Timer" type="Timer" parent="." unique_id=1618933064]
 

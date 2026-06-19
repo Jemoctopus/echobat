@@ -9,7 +9,8 @@ const JUMP_VELOCITY = -350.0
 @export var left_soundwave_spawn: Node2D ## The left marker in which we spawn the soundwaves from 
 @export var bat_body: Node2D ## The bats body in which we play visuals and locate the directions
 @export var soundwave_timer: Timer ## The timer which times time inbetween soundwave
-@export var tilemap: TileMapLayer ## The tilemap which the player will change
+@export var level_tilemap: TileMapLayer ## The tilemap which the player will change
+@export var info_tilemap: TileMapLayer ## The tilemap which gives information to the player to decide actions
 
 
 var direction_bat_facing = ["left", "right"]
@@ -22,6 +23,11 @@ var left_setpoint
 var right_setpoint
 var used_cells = []
 var marker_tiles
+
+
+func _ready() -> void:
+	LevelManager.load_data()
+	position = LevelManager.player_position
 
 
 func _physics_process(delta: float) -> void:
@@ -59,6 +65,17 @@ func _physics_process(delta: float) -> void:
 			soundwave_timer.start(time_between_soundwaves)
 			can_shoot_soundwave = false
 	
+	if Input.is_action_just_pressed("interact"):
+		var current_position = info_tilemap.local_to_map(bat_body.global_position)
+		var info : TileData = info_tilemap.get_cell_tile_data(current_position)
+		if info:
+			var can_sleep = info.get_custom_data("can_sleep")
+			if can_sleep:
+				print("SLEEP")
+				LevelManager.player_position = position
+				LevelManager.save_data()
+	
+	# Allow close up tiles to glow
 	#if tilemap and velocity > Vector2(0, 0):
 	#	left_setpoint = tilemap.local_to_map(left_soundwave_spawn.global_position)
 	#	right_setpoint =  tilemap.local_to_map(right_soundwave_spawn.global_position)

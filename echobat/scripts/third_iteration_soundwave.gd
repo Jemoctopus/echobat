@@ -54,6 +54,7 @@ func _soundwave() -> void:
 	var direction_going = directionary[direction_facing]
 	var how_apart
 	var cell
+	var all_used_cells = tilemap.get_used_cells()
 	while not has_soundwave_expired:
 		top_tile += direction_going[0]
 		bottom_tile += direction_going[1]
