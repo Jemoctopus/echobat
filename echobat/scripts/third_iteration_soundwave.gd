@@ -60,9 +60,11 @@ func _soundwave() -> void:
 		bottom_tile += direction_going[1]
 		how_apart = bottom_tile.y - top_tile.y
 		for cells_between in range(how_apart):
+			# The first column of cells
 			cell = Vector2i(top_tile.x, top_tile.y + cells_between)
 			if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 				used_cells.append(cell)
+			# The second column of cells so there isn't a gap. 
 			cell = Vector2i(top_tile.x + direction_additions[direction_facing], top_tile.y + cells_between)
 			if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 				used_cells.append(cell)

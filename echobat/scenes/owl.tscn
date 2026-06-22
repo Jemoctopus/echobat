@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://0mchir53235e"]
+
+[ext_resource type="Script" uid="uid://va05ecir76ip" path="res://scripts/owl.gd" id="1_a0qig"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lsvy4"]
+radius = 19.0
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path")]
+script = ExtResource("1_a0qig")
+navigation_agent = NodePath("NavigationAgent2D")
+time_check_path = NodePath("Timer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2093560563]
+shape = SubResource("CircleShape2D_lsvy4")
+
+[node name="ColorRect" type="ColorRect" parent="CollisionShape2D" unique_id=1272057538]
+offset_left = -19.0
+offset_top = -19.0
+offset_right = 19.0
+offset_bottom = 19.0
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1438026965]
+
+[node name="Timer" type="Timer" parent="." unique_id=1452652897]
+wait_time = 5.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
