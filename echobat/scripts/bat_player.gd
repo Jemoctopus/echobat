@@ -64,6 +64,9 @@ func _physics_process(delta: float) -> void:
 			summon_soundwave()
 			soundwave_timer.start(time_between_soundwaves)
 			can_shoot_soundwave = false
+			var creatures = get_tree().get_nodes_in_group("creatures")
+			for creature in creatures:
+				creature.alert_position()
 	
 	if Input.is_action_just_pressed("interact"):
 		var current_position = info_tilemap.local_to_map(bat_body.global_position)

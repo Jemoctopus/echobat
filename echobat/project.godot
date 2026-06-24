@@ -24,6 +24,7 @@ LevelManager="*uid://b1e5vcwg1n1lu"
 tilemaps=""
 level_manager="lets the items access the level_manager screen"
 player="So we can find the player"
+creatures=""
 
 [input]
 

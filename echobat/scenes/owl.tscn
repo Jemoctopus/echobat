@@ -30,6 +30,6 @@ debug_enabled = true
 wait_time = 5.0
 
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=2135793118]
-target_position = Vector2(300, 0)
+target_position = Vector2(600, 0)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

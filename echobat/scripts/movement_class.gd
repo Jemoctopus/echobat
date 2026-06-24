@@ -8,12 +8,14 @@ extends CharacterBody2D
 
 var movement_speed = 9999
 var player_position: Node
-var time_between_checks = 1
+var player_last_position: Vector2
+var time_between_checks = 0.5
 var player_spotted: bool = false
-var player_last_position
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
 	player_last_position = player_position.global_position
 	navigation_agent.target_position = player_position.global_position
@@ -49,3 +51,6 @@ func _recalculate_goal():
 
 func alert_position():
 	player_last_position = player_position.global_position
+	if navigation_agent.target_position != player_position.global_position:
+			player_last_position = player_position.global_position
+			navigation_agent.target_position = player_last_position
