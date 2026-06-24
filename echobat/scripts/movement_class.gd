@@ -6,7 +6,7 @@ extends CharacterBody2D
 @export var time_check_path: Timer
 @export var line_of_sight: RayCast2D
 
-var movement_speed = 9999
+var movement_speed = 200
 var player_position: Node
 var player_last_position: Vector2
 var time_between_checks = 0.5
@@ -17,13 +17,11 @@ var player_spotted: bool = false
 func _ready() -> void:
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
-	player_last_position = player_position.global_position
-	navigation_agent.target_position = player_position.global_position
 	time_check_path.start(time_between_checks)
-	player_spotted = _check_player_detection()
 
 
 func _check_player_detection() -> bool:
+	# Checks if player can be seen by the raycast.
 	var collider = line_of_sight.get_collider()
 	if collider and collider == get_tree().get_first_node_in_group("player"):
 		return true
@@ -37,20 +35,26 @@ func _physics_process(delta: float) -> void:
 		line_of_sight.look_at(player_position.global_position)
 		if not navigation_agent.is_target_reached():
 			var nav_point_direction = to_local(navigation_agent.get_next_path_position()).normalized()
-			velocity = nav_point_direction * movement_speed * delta
+			velocity = nav_point_direction * movement_speed
 			move_and_slide()
 
 
-func _recalculate_goal():
+func _goal() -> void:
+	# Calculates the goal that the creature wants to go to
+	print("ORIGINAL GOAL")
+	if navigation_agent.target_position != player_position.global_position:
+		player_last_position = player_position.global_position
+		navigation_agent.target_position = player_last_position
+
+
+func _recalculate_goal() -> void:
+	# Every time the timer timeouts we should recalulate the goal
 	if player_spotted:
-		if navigation_agent.target_position != player_position.global_position:
-			player_last_position = player_position.global_position
-			navigation_agent.target_position = player_last_position
+		_goal()
 	time_check_path.start(time_between_checks)
 
 
-func alert_position():
+func alert_position() -> void:
+	# Lets the creature know of the player's position when they echolocate
 	player_last_position = player_position.global_position
-	if navigation_agent.target_position != player_position.global_position:
-			player_last_position = player_position.global_position
-			navigation_agent.target_position = player_last_position
+	_goal()

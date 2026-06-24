@@ -24,6 +24,7 @@ offset_bottom = 19.0
 path_desired_distance = 3.0
 target_desired_distance = 3.0
 path_postprocessing = 1
+avoidance_enabled = true
 debug_enabled = true
 
 [node name="Timer" type="Timer" parent="." unique_id=1452652897]

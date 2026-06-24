@@ -5,10 +5,11 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yog2j"]
 radius = 4.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("navigation_agent", "time_check_path")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight")]
 script = ExtResource("1_yog2j")
 navigation_agent = NodePath("NavigationAgent2D")
 time_check_path = NodePath("Timer")
+line_of_sight = NodePath("LineOfSight")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566597160]
 shape = SubResource("CircleShape2D_yog2j")
@@ -26,3 +27,8 @@ path_postprocessing = 1
 debug_enabled = true
 
 [node name="Timer" type="Timer" parent="." unique_id=1106274555]
+
+[node name="LineOfSight" type="RayCast2D" parent="." unique_id=1456334295]
+target_position = Vector2(100, 0)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
