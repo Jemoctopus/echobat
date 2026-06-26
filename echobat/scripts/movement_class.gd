@@ -41,7 +41,6 @@ func _physics_process(delta: float) -> void:
 
 func _goal() -> void:
 	# Calculates the goal that the creature wants to go to
-	print("ORIGINAL GOAL")
 	if navigation_agent.target_position != player_position.global_position:
 		player_last_position = player_position.global_position
 		navigation_agent.target_position = player_last_position

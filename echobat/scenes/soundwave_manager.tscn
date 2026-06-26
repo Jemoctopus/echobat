@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bf7v2o28wtktd"]
 
-[ext_resource type="Script" uid="uid://55vvavsvktme" path="res://scripts/third_iteration_soundwave.gd" id="1_8j1fw"]
+[ext_resource type="Script" uid="uid://55vvavsvktme" path="res://scripts/soundwave.gd" id="1_8j1fw"]
 
 [node name="Node2D" type="Node2D" unique_id=1746745061 node_paths=PackedStringArray("marker", "expiration_timer")]
 script = ExtResource("1_8j1fw")

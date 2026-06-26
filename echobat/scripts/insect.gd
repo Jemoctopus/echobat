@@ -1,10 +1,11 @@
 extends creature_movement
 
 var how_far_away = 300.0
+@export var marker_away: Node2D
 
 
 func _ready() -> void:
-	movement_speed = 100
+	movement_speed = 150
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
 	time_check_path.start(time_between_checks)
@@ -13,10 +14,8 @@ func _ready() -> void:
 
 func _goal():
 	player_last_position = player_position.global_position
+	var goal = marker_away.global_position
 	
-	var direction_away: Vector2 = (player_last_position - global_position).normalized()
-	var goal = direction_away * how_far_away
-	print(goal, global_position)
 	navigation_agent.target_position = goal
 
 
