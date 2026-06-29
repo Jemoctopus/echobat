@@ -21,3 +21,8 @@ func _goal():
 
 func _on_timer_timeout() -> void:
 	_recalculate_goal()
+
+
+func _body_enter_area(body: Node2D) -> void:
+	if body == player_position:
+		queue_free()

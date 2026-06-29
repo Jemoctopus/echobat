@@ -5,6 +5,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_lsvy4"]
 radius = 19.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_a0qig"]
+radius = 20.09975
+
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight")]
 script = ExtResource("1_a0qig")
 navigation_agent = NodePath("NavigationAgent2D")
@@ -33,4 +36,10 @@ wait_time = 5.0
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=2135793118]
 target_position = Vector2(600, 0)
 
+[node name="Area2D" type="Area2D" parent="." unique_id=557454502]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=877762083]
+shape = SubResource("CircleShape2D_a0qig")
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
