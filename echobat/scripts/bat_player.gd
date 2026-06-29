@@ -15,7 +15,7 @@ const JUMP_VELOCITY = -350.0
 
 var direction_bat_facing = ["left", "right"]
 var direction_current = direction_bat_facing[1]
-var time_between_soundwaves = 2
+var time_between_soundwaves = 0.5
 var can_shoot_soundwave = true
 var left_marker_tiles
 var right_marker_tiles
