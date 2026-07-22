@@ -6,15 +6,16 @@
 radius = 4.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yog2j"]
-size = Vector2(10, 10)
+size = Vector2(12, 12)
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "collision_body", "navigation_agent", "time_check_path", "line_of_sight")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "navigation_agent", "time_check_path", "line_of_sight", "time_between_flaps")]
+collision_layer = 2
 script = ExtResource("1_yog2j")
 marker_away = NodePath("LineOfSight/Marker2D")
-collision_body = NodePath("Area2D")
 navigation_agent = NodePath("NavigationAgent2D")
-time_check_path = NodePath("Timer")
+time_check_path = NodePath("PathTimer")
 line_of_sight = NodePath("LineOfSight")
+time_between_flaps = NodePath("FlapTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566597160]
 shape = SubResource("CircleShape2D_yog2j")
@@ -24,25 +25,29 @@ offset_left = -4.0
 offset_top = -4.0
 offset_right = 4.0
 offset_bottom = 4.0
+metadata/_edit_use_anchors_ = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1351008791]
-path_desired_distance = 3.0
 target_desired_distance = 3.0
 path_postprocessing = 1
 debug_enabled = true
 
-[node name="Timer" type="Timer" parent="." unique_id=1106274555]
+[node name="PathTimer" type="Timer" parent="." unique_id=1106274555]
+
+[node name="FlapTimer" type="Timer" parent="." unique_id=1842409072]
+autostart = true
 
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=1456334295]
 target_position = Vector2(150, 0)
 
 [node name="Marker2D" type="Marker2D" parent="LineOfSight" unique_id=2042823078]
-position = Vector2(-300, 0)
+position = Vector2(-230, 0)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=2066957860]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=80104809]
 shape = SubResource("RectangleShape2D_yog2j")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
+[connection signal="timeout" from="FlapTimer" to="." method="_on_flap_timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_body_enter_area"]

@@ -7,11 +7,12 @@
 radius = 8.0
 height = 16.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "bat_body", "soundwave_timer")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "up_down_soundwave_spawn", "bat_body", "soundwave_timer")]
 script = ExtResource("1_5n6vd")
 soundwave_scene = ExtResource("2_1ny5b")
 right_soundwave_spawn = NodePath("Node2D/right Marker")
 left_soundwave_spawn = NodePath("Node2D/left Marker")
+up_down_soundwave_spawn = NodePath("Node2D/up_down Marker")
 bat_body = NodePath("Node2D")
 soundwave_timer = NodePath("Soundwave_Timer")
 
@@ -34,6 +35,8 @@ rotation = -1.5707964
 
 [node name="left Marker" type="Marker2D" parent="Node2D" unique_id=16018327]
 position = Vector2(-8, 0)
+
+[node name="up_down Marker" type="Marker2D" parent="Node2D" unique_id=1003237949]
 
 [node name="Soundwave_Timer" type="Timer" parent="." unique_id=1618933064]
 

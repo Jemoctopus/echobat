@@ -28,14 +28,19 @@ var has_soundwave_expired = false ## Has soundwave has run out of time
 var set_point ## The tile coordinates which the soundwave starts at. 
 var used_cells = []
 var direction_facing
-var direction_list = ["left", "right"]
+var direction_left_right = ["left", "right"]
+var direction_up_down = ["up", "down"]
 var directionary = {
 	"left" : [Vector2i(-2,-1), Vector2i(-2,1)],
-	"right" : [Vector2i(2,-1), Vector2i(2,1)]
-} ## Dictionary for the directions of math. Name approved by Mr Robins. 
+	"right" : [Vector2i(2,-1), Vector2i(2,1)],
+	"up" : [Vector2i(-1, -2), Vector2i(1, -2)],
+	"down" : [Vector2i(-1, 2), Vector2i(1, 2)]
+} ## Dictionary for the directions so I can store the math. Name approved by Mr Robins. 
 var direction_additions = {
 	"left" : -1,
-	"right" : 1
+	"right" : 1,
+	"up": -1,
+	"down" : 1
 } ## Directions for filling in the blanks
 
 
@@ -58,16 +63,28 @@ func _soundwave() -> void:
 	while not has_soundwave_expired:
 		top_tile += direction_going[0]
 		bottom_tile += direction_going[1]
-		how_apart = bottom_tile.y - top_tile.y
-		for cells_between in range(how_apart):
+		if direction_facing == direction_left_right[0] or direction_facing == direction_left_right[1]:
+			how_apart = abs(bottom_tile.y - (top_tile.y - 1))
+			for cells_between in range(how_apart):
 			# The first column of cells
-			cell = Vector2i(top_tile.x, top_tile.y + cells_between)
-			if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
-				used_cells.append(cell)
-			# The second column of cells so there isn't a gap. 
-			cell = Vector2i(top_tile.x + direction_additions[direction_facing], top_tile.y + cells_between)
-			if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
-				used_cells.append(cell)
+				cell = Vector2i(top_tile.x, top_tile.y + cells_between)
+				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
+				# The second column of cells so there isn't a gap. 
+				cell = Vector2i(top_tile.x + direction_additions[direction_facing], top_tile.y + cells_between)
+				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
+		elif direction_facing == direction_up_down[0] or direction_facing == direction_up_down[1]:
+			how_apart = abs(top_tile.x - (bottom_tile.x + 1))
+			for cells_between in range(how_apart):
+				# The first column of cells
+				cell = Vector2i(top_tile.x + cells_between, top_tile.y)
+				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
+				# The second column of cells so there isn't a gap. 
+				cell = Vector2i(top_tile.x + cells_between, top_tile.y + direction_additions[direction_facing])
+				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
 		tilemap.set_cells_terrain_connect(used_cells, terrain_set_test, 0, true)
 		await get_tree().create_timer(pause_between_tilemap_change).timeout
 	queue_free()
