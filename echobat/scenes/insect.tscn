@@ -5,6 +5,12 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_yog2j"]
 radius = 4.0
 
+[sub_resource type="Curve2D" id="Curve2D_yog2j"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, -4, 0, 0, 0, 0, 5, -5, 0, 0, 0, 0, 8, -1, 0, 0, 0, 0, 7, 3, 0, 0, 0, 0, 3, 4, 0, 0, 0, 0, -3, -5, 0, 0, 0, 0, -7, -3, 0, 0, 0, 0, -6, 4, 0, 0, 0, 0, -4, 7, 0, 0, 0, 0, -1, 4, 0, 0, 0, 0, 0, 0)
+}
+point_count = 12
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yog2j"]
 size = Vector2(12, 12)
 
@@ -20,16 +26,11 @@ time_between_flaps = NodePath("FlapTimer")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566597160]
 shape = SubResource("CircleShape2D_yog2j")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=565643536]
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-metadata/_edit_use_anchors_ = true
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1351008791]
 target_desired_distance = 3.0
 path_postprocessing = 1
+avoidance_enabled = true
+max_neighbors = 15
 debug_enabled = true
 
 [node name="PathTimer" type="Timer" parent="." unique_id=1106274555]
@@ -43,11 +44,24 @@ target_position = Vector2(150, 0)
 [node name="Marker2D" type="Marker2D" parent="LineOfSight" unique_id=2042823078]
 position = Vector2(-230, 0)
 
-[node name="Area2D" type="Area2D" parent="." unique_id=2066957860]
+[node name="Path2D" type="Path2D" parent="." unique_id=684601649]
+curve = SubResource("Curve2D_yog2j")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=80104809]
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D" unique_id=1069442513]
+rotates = false
+
+[node name="Area2D" type="Area2D" parent="Path2D/PathFollow2D" unique_id=2066957860]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/Area2D" unique_id=80104809]
 shape = SubResource("RectangleShape2D_yog2j")
+
+[node name="ColorRect" type="ColorRect" parent="Path2D/PathFollow2D" unique_id=565643536]
+offset_left = 1.7888547
+offset_top = -5.3665633
+offset_right = 9.788855
+offset_bottom = 2.6334367
+metadata/_edit_use_anchors_ = true
 
 [connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
 [connection signal="timeout" from="FlapTimer" to="." method="_on_flap_timer_timeout"]
-[connection signal="body_entered" from="Area2D" to="." method="_body_enter_area"]
+[connection signal="body_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_body_enter_area"]

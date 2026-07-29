@@ -8,11 +8,12 @@ radius = 19.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_a0qig"]
 radius = 20.09975
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight", "time_between_flaps")]
 script = ExtResource("1_a0qig")
 navigation_agent = NodePath("NavigationAgent2D")
-time_check_path = NodePath("Timer")
+time_check_path = NodePath("PathTimer")
 line_of_sight = NodePath("LineOfSight")
+time_between_flaps = NodePath("FlapTimer")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2093560563]
 shape = SubResource("CircleShape2D_lsvy4")
@@ -24,13 +25,11 @@ offset_right = 19.0
 offset_bottom = 19.0
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1438026965]
-path_desired_distance = 3.0
+path_desired_distance = 10.0
 target_desired_distance = 3.0
 path_postprocessing = 1
 avoidance_enabled = true
-
-[node name="Timer" type="Timer" parent="." unique_id=1452652897]
-wait_time = 5.0
+debug_enabled = true
 
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=2135793118]
 target_position = Vector2(600, 0)
@@ -40,5 +39,12 @@ target_position = Vector2(600, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=877762083]
 shape = SubResource("CircleShape2D_a0qig")
 
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[node name="FlapTimer" type="Timer" parent="." unique_id=1454078178]
+autostart = true
+
+[node name="PathTimer" type="Timer" parent="." unique_id=1452652897]
+wait_time = 5.0
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="timeout" from="FlapTimer" to="." method="_on_flap_timer_timeout"]
+[connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]

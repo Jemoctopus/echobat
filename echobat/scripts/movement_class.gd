@@ -23,7 +23,8 @@ func _ready() -> void:
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
 	time_check_path.start(time_between_checks)
-	time_between_flaps.start(time_between_checks)
+	time_between_flaps.start(flap_time)
+	
 
 
 func _check_player_detection() -> bool:
@@ -36,21 +37,14 @@ func _check_player_detection() -> bool:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity.y += gravity * delta
 	player_spotted = _check_player_detection()
 	if player_position:
 		line_of_sight.look_at(player_position.global_position)
 		if not navigation_agent.is_target_reached():
 			nav_point_direction = to_local(navigation_agent.get_next_path_position()).normalized()
-	move_and_slide()
-
-
-func flap_wings() -> void:
-	if not navigation_agent.is_target_reached():
-		velocity = nav_point_direction * movement_speed
-	if not nav_point_direction or navigation_agent.is_target_reached():
-		velocity.y -= lift_from_wings
+			velocity = nav_point_direction * movement_speed
+			if velocity.y < 0:
+				velocity.y += 1
 	move_and_slide()
 
 
