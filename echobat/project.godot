@@ -19,6 +19,11 @@ config/icon="res://icon.svg"
 
 LevelManager="*uid://b1e5vcwg1n1lu"
 
+[display]
+
+window/size/mode=2
+window/stretch/scale=1.5
+
 [global_group]
 
 tilemaps=""

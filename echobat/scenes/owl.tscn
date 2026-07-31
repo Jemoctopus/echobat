@@ -29,7 +29,6 @@ path_desired_distance = 10.0
 target_desired_distance = 3.0
 path_postprocessing = 1
 avoidance_enabled = true
-debug_enabled = true
 
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=2135793118]
 target_position = Vector2(600, 0)

@@ -45,6 +45,8 @@ func _physics_process(delta: float) -> void:
 			velocity = nav_point_direction * movement_speed
 			if velocity.y < 0:
 				velocity.y += 1
+		elif navigation_agent.is_target_reached():
+			velocity = Vector2(0,0)
 	move_and_slide()
 
 

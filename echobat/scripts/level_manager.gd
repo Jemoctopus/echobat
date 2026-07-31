@@ -1,7 +1,11 @@
 extends Node
 
+@export var info_layer: TileMapLayer
+
+
 var save_path: String = "user://save_data.save"
 var player_position: Vector2
+
 
 func save_data() -> void:
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
