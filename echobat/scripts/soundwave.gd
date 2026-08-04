@@ -23,7 +23,8 @@ var source_id = 0
 var white_tile_atlas_id: Vector2i = Vector2i(0, 4)
 var black_tile_atlas_id: Vector2i = Vector2i(0, 0)
 var pause_between_tilemap_change = 0.02
-var expiration_time = 1.0
+var pause_between_tilemap_hides = 10
+var expiration_time = 1.5
 var has_soundwave_expired = false ## Has soundwave has run out of time
 var set_point ## The tile coordinates which the soundwave starts at. 
 var used_cells = []
@@ -31,10 +32,10 @@ var direction_facing
 var direction_left_right = ["left", "right"]
 var direction_up_down = ["up", "down"]
 var directionary = {
-	"left" : [Vector2i(-2,-1), Vector2i(-2,1)],
-	"right" : [Vector2i(2,-1), Vector2i(2,1)],
-	"up" : [Vector2i(-1, -2), Vector2i(1, -2)],
-	"down" : [Vector2i(-1, 2), Vector2i(1, 2)]
+	"left" : [Vector2i(-1,-1), Vector2i(-1,1)],
+	"right" : [Vector2i(1,-1), Vector2i(1,1)],
+	"up" : [Vector2i(-1, -1), Vector2i(1, -1)],
+	"down" : [Vector2i(-1, 1), Vector2i(1, 1)]
 } ## Dictionary for the directions so I can store the math. Name approved by Mr Robins. 
 var direction_additions = {
 	"left" : -1,
@@ -70,10 +71,6 @@ func _soundwave() -> void:
 				cell = Vector2i(top_tile.x, top_tile.y + cells_between)
 				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 					used_cells.append(cell)
-				# The second column of cells so there isn't a gap. 
-				cell = Vector2i(top_tile.x + direction_additions[direction_facing], top_tile.y + cells_between)
-				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
-					used_cells.append(cell)
 		elif direction_facing == direction_up_down[0] or direction_facing == direction_up_down[1]:
 			how_apart = abs(top_tile.x - (bottom_tile.x + 1))
 			for cells_between in range(how_apart):
@@ -81,37 +78,19 @@ func _soundwave() -> void:
 				cell = Vector2i(top_tile.x + cells_between, top_tile.y)
 				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 					used_cells.append(cell)
-				# The second column of cells so there isn't a gap. 
-				cell = Vector2i(top_tile.x + cells_between, top_tile.y + direction_additions[direction_facing])
-				if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
-					used_cells.append(cell)
 		tilemap.set_cells_terrain_connect(used_cells, terrain_set_test, 0, true)
 		await get_tree().create_timer(pause_between_tilemap_change).timeout
-	queue_free()
+	expiration_timer.start(expiration_time)
 
 
 func _on_expiration_timer_timeout() -> void:
 	has_soundwave_expired = true
+	_turn_tilemap_back()
 
 
 func _turn_tilemap_back() -> void:
-	var fadeout1 = []
-	var fadeout2 = []
-	var fadeout3 = []
-	var terrain_data
+	await get_tree().create_timer(pause_between_tilemap_hides).timeout
 	if tilemap:
 		for cells in used_cells:
-			terrain_data = tilemap.get_cell_tile_data(cells)
-			terrain_data = terrain_data.terrain
-			if terrain_data == 0:
-				fadeout1.append(cells)
-			elif terrain_data == 1:
-				fadeout2.append(cells)
-			elif terrain_data == 2:
-				fadeout3.append(cells)
-			elif terrain_data == 3:
-				tilemap.set_cell(cells, source_id, black_tile_atlas_id)
-				queue_free()
-		tilemap.set_cells_terrain_connect(fadeout1, terrain_set_test, terrain_test["fadeout1"], true)
-		tilemap.set_cells_terrain_connect(fadeout2, terrain_set_test, terrain_test["fadeout2"], true)
-		tilemap.set_cells_terrain_connect(fadeout3, terrain_set_test, terrain_test["fadeout3"], true)
+			tilemap.set_cell(cells, source_id, black_tile_atlas_id)
+	queue_free()
