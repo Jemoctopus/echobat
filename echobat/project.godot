@@ -31,6 +31,7 @@ tilemaps=""
 level_manager="lets the items access the level_manager screen"
 player="So we can find the player"
 creatures=""
+info_tilemaps="Tilemaps that store the information"
 
 [input]
 

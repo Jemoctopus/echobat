@@ -43,9 +43,10 @@ func _physics_process(delta: float) -> void:
 	elif Input.is_action_pressed("ui_down") and is_on_wall():
 		velocity.y = -JUMP_VELOCITY
 		direction_current = direction_bat_facing[3]
-	elif Input.is_action_just_pressed("ui_down") and is_on_ceiling():
-		velocity.y = -JUMP_VELOCITY
+	elif Input.is_action_just_pressed("ui_down"):
 		direction_current = direction_bat_facing[3]
+		if is_on_ceiling() or is_on_wall():
+			velocity.y = -JUMP_VELOCITY
 	else:
 		if is_on_wall():
 			velocity.y = 0

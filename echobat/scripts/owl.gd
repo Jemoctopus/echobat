@@ -15,4 +15,4 @@ func _on_body_entered(body: Node2D) -> void:
 
 
 func _on_path_timer_timeout() -> void:
-	_recalculate_goal()
+	recalculate_goal()

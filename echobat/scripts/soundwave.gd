@@ -7,24 +7,10 @@ extends Node2D
 var tilemap_dark: TileMapLayer
 var tilemap_visible: TileMapLayer
 
-var terrain_test = {
-	"bright" : 0,
-	"fadeout1" : 1,
-	"fadeout2" : 2,
-	"fadeout3" : 3
-} ## Terrain gradient keys
-var terrain_ordering_test  = {
-	0 : "bright",
-	1 : "fadeout1",
-	2 : "fadeout2",
-	3 : "fadeout3"
-} ## Ordering of the terrain gradient
-var current_terrain_ordering = 0
-var terrain_set = 0
 var source_id = 0
 var erase_tile_atlas_id: Vector2i = Vector2i(-1,-1)
 var black_tile_atlas_id: Vector2i = Vector2i(0, 0)
-var pause_between_tilemap_change = 0.02
+var pause_between_tilemap_change = 0.01
 var pause_between_tilemap_hides = 10
 var expiration_time = 1.5
 var has_soundwave_expired = false ## Has soundwave has run out of time
@@ -41,8 +27,8 @@ var directionary = {
 } ## Dictionary for the directions so I can store the math. Name approved by Mr Robins. 
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Get the tilemap layer and set the setpoint 
 	tilemap_dark = get_tree().get_first_node_in_group("tilemaps")
 	expiration_timer.start(expiration_time)
 	if tilemap_dark:
@@ -50,14 +36,15 @@ func _ready() -> void:
 		_soundwave()
 
 
+# Called in the start to trigger 
 func _soundwave() -> void:
-	var top_tile = set_point
-	var bottom_tile = set_point
-	var direction_going = directionary[direction_facing]
-	var how_apart
-	var cell
-	var all_used_cells = tilemap_dark.get_used_cells()
+	var top_tile = set_point ## The top of the soundwave.
+	var bottom_tile = set_point ## The bottom of the soundwave.
+	var direction_going = directionary[direction_facing] ## The direction the soundwave is going.
+	var how_apart ## How far apart the soundwaves are.
+	var cell ## The current cell in which I will use to change the tilemap.
 	while not has_soundwave_expired:
+		# Loops keeps the soundwave going until the timer goes out.
 		top_tile += direction_going[0]
 		bottom_tile += direction_going[1]
 		if direction_facing == direction_left_right[0] or direction_facing == direction_left_right[1]:
