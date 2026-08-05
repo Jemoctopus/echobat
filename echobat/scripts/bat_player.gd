@@ -81,20 +81,6 @@ func _physics_process(delta: float) -> void:
 				print("SLEEP")
 				LevelManager.player_position = position
 				LevelManager.save_data()
-	
-	# Allow close up tiles to glow
-	#if tilemap and velocity > Vector2(0, 0):
-	#	left_setpoint = tilemap.local_to_map(left_soundwave_spawn.global_position)
-	#	right_setpoint =  tilemap.local_to_map(right_soundwave_spawn.global_position)
-	#	left_marker_tiles = tilemap.get_surrounding_cells(left_setpoint)
-	#	left_marker_tiles.append(left_setpoint)
-	#	right_marker_tiles = tilemap.get_surrounding_cells(right_setpoint)
-	#	right_marker_tiles.append(right_setpoint)
-	#	marker_tiles = right_marker_tiles + left_marker_tiles
-	#	for cell in marker_tiles:
-	#		if not tilemap.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
-	#			used_cells.append(cell)
-	#	tilemap.set_cells_terrain_connect(used_cells, 0, 0, true)
 	move_and_slide()
 
 

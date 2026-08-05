@@ -66,6 +66,7 @@ func _soundwave() -> void:
 			# The first column of cells
 				cell = Vector2i(top_tile.x, top_tile.y + cells_between)
 				if not tilemap_dark.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
 					tilemap_dark.set_cell(cell, source_id, erase_tile_atlas_id)
 		elif direction_facing == direction_up_down[0] or direction_facing == direction_up_down[1]:
 			how_apart = abs(top_tile.x - (bottom_tile.x + 1))
@@ -73,8 +74,8 @@ func _soundwave() -> void:
 				# The first column of cells
 				cell = Vector2i(top_tile.x + cells_between, top_tile.y)
 				if not tilemap_dark.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
+					used_cells.append(cell)
 					tilemap_dark.set_cell(cell, source_id, erase_tile_atlas_id)
-		tilemap_dark.set_cells_terrain_connect(used_cells, terrain_set, 0, true)
 		await get_tree().create_timer(pause_between_tilemap_change).timeout
 	expiration_timer.start(expiration_time)
 
