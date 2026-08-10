@@ -34,6 +34,7 @@ disabled = true
 path_postprocessing = 1
 avoidance_enabled = true
 max_neighbors = 15
+debug_enabled = true
 
 [node name="PathTimer" type="Timer" parent="." unique_id=1106274555]
 
