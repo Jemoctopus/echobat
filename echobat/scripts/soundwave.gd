@@ -13,38 +13,27 @@ var atlas_id_dict = {
 	"fadeout1" : Vector2i(0, 3),
 	"fadeout2" : Vector2i(0, 2),
 	"fadeout3" : Vector2i(0, 1),
-	"black" : Vector2i(0, 0)
+	"black" : Vector2i(0, 0),
 }
-var atlas_id_order = {
-	0 : "erase",
-	1 : "erase",
-	2 : "fadeout1",
-	3 : "fadeout2",
-	4 : "fadeout3",
-	5 : "black"
-	
-}
-var current_atlas_order_number = 1
-var current_atlas_order_name = atlas_id_order[current_atlas_order_number] ## The current tile altas id selected
-var atlas_id : Vector2i
-var erase_tile_atlas_id: Vector2i = Vector2i(-1,-1)
-var length_of_gradient = len(atlas_id_order) - 1
 
-var pause_between_tilemap_change = 0.01
-var pause_between_tilemap_hides = 3
-var expiration_time = 1.5
-var has_soundwave_expired = false ## Has soundwave has run out of time
+var current_atlas_id = "erase" ## The current tile altas id selected.
+var atlas_id : Vector2i ## The atlas_id that is put into the set_cell() function.
+
+var pause_between_tilemap_change = 0.01 ## The delay on the soundwave rows that spreads.
+var pause_between_tilemap_hides = 1 ## The delay between the different soundwaves.
+var expiration_time = 1.5 ## Time before the the soundwave stops spreading.
+var has_soundwave_expired = false ## Has soundwave has run out of time.
 var set_point ## The tile coordinates which the soundwave starts at. 
 var used_cells = []
 
-var direction_facing
-var direction_left_right = ["left", "right"]
+var direction_facing ## The direction that the soundwave goes in.
+var direction_left_right = ["left", "right"] 
 var direction_up_down = ["up", "down"]
 var directionary = {
 	"left" : [Vector2i(-1,-1), Vector2i(-1,1)],
 	"right" : [Vector2i(1,-1), Vector2i(1,1)],
 	"up" : [Vector2i(-1, -1), Vector2i(1, -1)],
-	"down" : [Vector2i(-1, 1), Vector2i(1, 1)]
+	"down" : [Vector2i(-1, 1), Vector2i(1, 1)],
 } ## Dictionary for the directions so I can store the math. Name approved by Mr Robins. 
 
 
@@ -64,7 +53,7 @@ func _soundwave() -> void:
 	var direction_going = directionary[direction_facing] ## The direction the soundwave is going.
 	var how_apart ## How far apart the soundwaves are.
 	var cell ## The current cell in which I will use to change the tilemap.
-	atlas_id = atlas_id_dict[current_atlas_order_name]
+	atlas_id = atlas_id_dict[current_atlas_id]
 	while not has_soundwave_expired:
 		# Loops keeps the soundwave going until the timer goes out.
 		top_tile += direction_going[0]
@@ -86,7 +75,6 @@ func _soundwave() -> void:
 					used_cells.append(cell)
 					tilemap_dark.set_cell(cell, source_id, atlas_id)
 		await get_tree().create_timer(pause_between_tilemap_change).timeout
-	expiration_timer.start(expiration_time)
 
 
 func _on_expiration_timer_timeout() -> void:
@@ -95,12 +83,10 @@ func _on_expiration_timer_timeout() -> void:
 
 
 func _turn_tilemap_back() -> void:
-	for gradient in range(length_of_gradient):
-		print(gradient)
+	for dark_gradient in atlas_id_dict:
 		await get_tree().create_timer(pause_between_tilemap_hides).timeout
+		atlas_id = atlas_id_dict[dark_gradient]
 		if tilemap_dark:
-			current_atlas_order_name = atlas_id_order[gradient]
-			atlas_id = atlas_id_dict[current_atlas_order_name]
 			for cells in used_cells:
 				tilemap_dark.set_cell(cells, source_id, atlas_id)
 	queue_free()

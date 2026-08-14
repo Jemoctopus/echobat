@@ -39,11 +39,11 @@ func create_goal():
 		player_last_position = player_position.global_position
 		var goal = marker_away.global_position
 		navigation_agent.target_position = goal
-	elif navigation_agent.navigation_finished:
-		var nav_tiles = navigation_layer.get_used_cells_by_id()
-		var random_number = randi_range(0, len(nav_tiles))
-		var random_tile = nav_tiles[random_number]
-		navigation_agent.target_position = random_tile
+	#elif navigation_agent.navigation_finished:
+	#	var nav_tiles = navigation_layer.get_used_cells_by_id()
+	#	var random_number = randi_range(0, len(nav_tiles))
+	#	var random_tile = nav_tiles[random_number]
+	#	navigation_agent.target_position = random_tile
 
 
 func _on_path_timer_timeout() -> void:
