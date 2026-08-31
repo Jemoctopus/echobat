@@ -58,16 +58,13 @@ func load_data() -> void:
 
 func tilemap_hide() -> void:
 	# Hides the tilemap 
-	var count = 0
 	while game_running:
 		takeaway = 0
 		for cells in range(len(used_cells)):
 			cells -= takeaway
 			if typeof(used_cells[cells]) == typeof(null):
-				print("HI")
 				takeaway += 1
-				used_cells.erase(cells)
-		count += 1
+				used_cells.remove_at(cells)
 		# Waits for a bit
 		await get_tree().create_timer(pause_between_tilemap_hides).timeout
 		# If there is cells in the used_cells list, then change cell to next gradient
