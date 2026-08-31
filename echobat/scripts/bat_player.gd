@@ -12,6 +12,7 @@ const JUMP_VELOCITY = -350.0
 @export var soundwave_timer: Timer ## The timer which times time inbetween soundwave
 @export var level_tilemap: TileMapLayer ## The tilemap which the player will change
 @export var info_tilemap: TileMapLayer ## The tilemap which gives information to the player to decide actions
+@export var info_label: Label ## The label which tells the player if they can do things
 
 
 var direction_bat_facing = ["left", "right", "up", "down"]
@@ -24,6 +25,10 @@ var left_setpoint
 var right_setpoint
 var used_cells = []
 var marker_tiles
+var can_sleep = false
+
+@onready var current_position = info_tilemap.local_to_map(bat_body.global_position)
+@onready var info : TileData = info_tilemap.get_cell_tile_data(current_position)
 
 
 func _ready() -> void:
@@ -73,16 +78,30 @@ func _physics_process(delta: float) -> void:
 			for creature in creatures:
 				creature.alert_position()
 	
+	# Gets the information at the current tiles 
+	current_position = info_tilemap.local_to_map(bat_body.global_position)
+	info = info_tilemap.get_cell_tile_data(current_position)
+	if info:
+		can_sleep = info.get_custom_data("can_sleep")
+		# Changes label's visibility based on the 
+		if can_sleep:
+			info_label.visible = true
+		else:
+			info_label.visible = false
+	
+	# When the interact function is presses, player interacts. 
 	if Input.is_action_just_pressed("interact"):
-		var current_position = info_tilemap.local_to_map(bat_body.global_position)
-		var info : TileData = info_tilemap.get_cell_tile_data(current_position)
 		if info:
-			var can_sleep = info.get_custom_data("can_sleep")
+			# Check which interaction is possible.
 			if can_sleep:
-				print("SLEEP")
+				new_day()
 				LevelManager.player_position = position
 				LevelManager.save_data()
 	move_and_slide()
+
+
+func new_day():
+	pass
 
 
 func summon_soundwave():

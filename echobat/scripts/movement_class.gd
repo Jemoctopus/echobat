@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var navigation_agent: NavigationAgent2D
 @export var time_check_path: Timer
 @export var line_of_sight: RayCast2D
-@export var time_between_flaps: Timer
+@export var alarm_visual: Sprite2D
 
 var player_position: Node
 var player_last_position: Vector2
@@ -24,17 +24,19 @@ var movement_speed = 50
 func _ready() -> void:
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
-	navigation_layer = get_tree().get_first_node_in_group("info_tilemaps")
+	navigation_layer = get_tree().get_first_node_in_group("info_tilemap")
 	time_check_path.start(time_between_checks)
-	time_between_flaps.start(flap_time)
 
 
 func check_player_detection() -> bool:
 	# Checks if player can be seen by the raycast.
 	var collider = line_of_sight.get_collider()
-	if collider and collider == get_tree().get_first_node_in_group("player"):
+	if collider and collider == player_position:
+		alarm_visual.visible = true
 		return true
-	return false
+	else:
+		alarm_visual.visible = false
+		return false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -48,7 +50,7 @@ func _physics_process(delta: float) -> void:
 			if velocity.y < 0:
 				velocity.y += 1
 		elif navigation_agent.is_target_reached():
-			velocity = Vector2(0,0)
+			velocity = Vector2.ZERO
 	move_and_slide()
 
 

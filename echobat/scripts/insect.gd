@@ -1,27 +1,29 @@
 extends creature_movement
 
-var how_far_away = 300.0
 @export var marker_away: Node2D
 @export var flutter_path: PathFollow2D
 
+var how_far_away = 300.0
+var speed_of_flutter = 0.01
+
 
 func _ready() -> void:
-	movement_speed = 60
+	movement_speed = 75
 	flap_time = 0.5
 	lift_from_wings = 55
 	gravity = 100
 	player_spotted = check_player_detection()
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
-	navigation_layer = get_tree().get_first_node_in_group("info_tilemaps")
+	navigation_layer = get_tree().get_first_node_in_group("info_tilemap")
 	time_check_path.start(time_between_checks)
-	var random_flutter_time = randf_range(0.0, 1.0)
+	var random_flutter_time = randf()
 	flutter_path.progress_ratio = random_flutter_time
 
 
 func _physics_process(delta: float) -> void:
 	player_spotted = check_player_detection()
-	flutter_path.progress_ratio += 0.01
+	flutter_path.progress_ratio += speed_of_flutter
 	if player_position:
 		line_of_sight.look_at(player_position.global_position)
 		if not navigation_agent.is_target_reached():
@@ -30,7 +32,7 @@ func _physics_process(delta: float) -> void:
 			if velocity.y < 0:
 				velocity.y += 1
 		elif navigation_agent.is_target_reached():
-			velocity = Vector2(0,0)
+			velocity = Vector2.ZERO
 	move_and_slide()
 
 

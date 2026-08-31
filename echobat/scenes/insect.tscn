@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cbkdnnmjbpawx"]
 
 [ext_resource type="Script" uid="uid://dpldj0ugv6fyk" path="res://scripts/insect.gd" id="1_yog2j"]
+[ext_resource type="Texture2D" uid="uid://bipl2cl5vxag6" path="res://assets/alarm.png" id="2_bb1u4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yog2j"]
 radius = 4.0
@@ -17,7 +18,7 @@ size = Vector2(12, 12)
 [sub_resource type="CircleShape2D" id="CircleShape2D_bb1u4"]
 radius = 4.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "flutter_path", "navigation_agent", "time_check_path", "line_of_sight")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "flutter_path", "navigation_agent", "time_check_path", "line_of_sight", "alarm_visual")]
 collision_layer = 2
 script = ExtResource("1_yog2j")
 marker_away = NodePath("LineOfSight/Marker2D")
@@ -25,6 +26,7 @@ flutter_path = NodePath("Path2D/PathFollow2D")
 navigation_agent = NodePath("NavigationAgent2D")
 time_check_path = NodePath("PathTimer")
 line_of_sight = NodePath("LineOfSight")
+alarm_visual = NodePath("Path2D/PathFollow2D/Alarm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566597160]
 shape = SubResource("CircleShape2D_yog2j")
@@ -39,7 +41,7 @@ debug_enabled = true
 [node name="PathTimer" type="Timer" parent="." unique_id=1106274555]
 
 [node name="LineOfSight" type="RayCast2D" parent="." unique_id=1456334295]
-target_position = Vector2(150, 0)
+target_position = Vector2(200, 0)
 
 [node name="Marker2D" type="Marker2D" parent="LineOfSight" unique_id=2042823078]
 position = Vector2(-230, 0)
@@ -69,6 +71,10 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/RigidBody2D" unique_id=1488996164]
 position = Vector2(6, -1)
 shape = SubResource("CircleShape2D_bb1u4")
+
+[node name="Alarm" type="Sprite2D" parent="Path2D/PathFollow2D" unique_id=1235753970]
+position = Vector2(6, -16)
+texture = ExtResource("2_bb1u4")
 
 [connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
 [connection signal="body_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_body_enter_area"]

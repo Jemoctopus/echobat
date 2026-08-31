@@ -15,7 +15,7 @@ var atlas_id_dict = {
 	"fadeout3" : Vector2i(0, 1),
 	"black" : Vector2i(0, 0),
 }
-
+var atlas_order = ["erase", "fadeout1", "fadeout2", "fadeout3", "black"]
 var current_atlas_id = "erase" ## The current tile altas id selected.
 var atlas_id : Vector2i ## The atlas_id that is put into the set_cell() function.
 
@@ -39,7 +39,7 @@ var directionary = {
 
 func _ready() -> void:
 	# Get the tilemap layer and set the setpoint 
-	tilemap_dark = get_tree().get_first_node_in_group("tilemaps")
+	tilemap_dark = get_tree().get_first_node_in_group("dark_tilemap")
 	expiration_timer.start(expiration_time)
 	if tilemap_dark:
 		set_point = tilemap_dark.local_to_map(marker.global_position)
@@ -59,17 +59,17 @@ func _soundwave() -> void:
 		top_tile += direction_going[0]
 		bottom_tile += direction_going[1]
 		if direction_facing == direction_left_right[0] or direction_facing == direction_left_right[1]:
+			# Soundwave going left or right
 			how_apart = abs(bottom_tile.y - (top_tile.y - 1))
 			for cells_between in range(how_apart):
-			# The first column of cells
 				cell = Vector2i(top_tile.x, top_tile.y + cells_between)
 				if not tilemap_dark.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 					used_cells.append(cell)
 					tilemap_dark.set_cell(cell, source_id, atlas_id)
 		elif direction_facing == direction_up_down[0] or direction_facing == direction_up_down[1]:
+			# Soundwave going up or down
 			how_apart = abs(top_tile.x - (bottom_tile.x + 1))
 			for cells_between in range(how_apart):
-				# The first column of cells
 				cell = Vector2i(top_tile.x + cells_between, top_tile.y)
 				if not tilemap_dark.get_cell_atlas_coords(cell) == Vector2i(-1, -1):
 					used_cells.append(cell)
@@ -79,7 +79,8 @@ func _soundwave() -> void:
 
 func _on_expiration_timer_timeout() -> void:
 	has_soundwave_expired = true
-	_turn_tilemap_back()
+	LevelManager.used_cells.append_array(used_cells)
+	queue_free()
 
 
 func _turn_tilemap_back() -> void:

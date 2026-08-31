@@ -27,11 +27,9 @@ window/stretch/scale=1.5
 
 [global_group]
 
-tilemaps=""
-level_manager="lets the items access the level_manager screen"
 player="So we can find the player"
 creatures=""
-info_tilemaps="Tilemaps that store the information"
+gameplay_ui="UI displayed while playing the game"
 
 [input]
 

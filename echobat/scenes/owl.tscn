@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://0mchir53235e"]
 
 [ext_resource type="Script" uid="uid://va05ecir76ip" path="res://scripts/owl.gd" id="1_a0qig"]
+[ext_resource type="Texture2D" uid="uid://bipl2cl5vxag6" path="res://assets/alarm.png" id="2_ri17u"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lsvy4"]
 radius = 19.0
@@ -8,12 +9,12 @@ radius = 19.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_a0qig"]
 radius = 20.09975
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight", "time_between_flaps")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight", "alarm_visual")]
 script = ExtResource("1_a0qig")
 navigation_agent = NodePath("NavigationAgent2D")
 time_check_path = NodePath("PathTimer")
 line_of_sight = NodePath("LineOfSight")
-time_between_flaps = NodePath("FlapTimer")
+alarm_visual = NodePath("Alarm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2093560563]
 shape = SubResource("CircleShape2D_lsvy4")
@@ -43,6 +44,10 @@ autostart = true
 
 [node name="PathTimer" type="Timer" parent="." unique_id=1452652897]
 wait_time = 5.0
+
+[node name="Alarm" type="Sprite2D" parent="." unique_id=1836569546]
+position = Vector2(0, -30)
+texture = ExtResource("2_ri17u")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="timeout" from="FlapTimer" to="." method="_on_flap_timer_timeout"]
