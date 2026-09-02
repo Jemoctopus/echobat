@@ -46,6 +46,7 @@ autostart = true
 wait_time = 5.0
 
 [node name="Alarm" type="Sprite2D" parent="." unique_id=1836569546]
+visible = false
 position = Vector2(0, -30)
 texture = ExtResource("2_ri17u")
 

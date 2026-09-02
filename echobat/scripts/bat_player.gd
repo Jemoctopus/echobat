@@ -82,26 +82,23 @@ func _physics_process(delta: float) -> void:
 	current_position = info_tilemap.local_to_map(bat_body.global_position)
 	info = info_tilemap.get_cell_tile_data(current_position)
 	if info:
-		can_sleep = info.get_custom_data("can_sleep")
-		# Changes label's visibility based on the 
-		if can_sleep:
-			info_label.visible = true
-		else:
-			info_label.visible = false
+		if is_on_ceiling():
+			# If the player is on sleeping tiles and on ceiling, then they can sleep
+			can_sleep = info.get_custom_data("can_sleep")
+			if can_sleep:
+				info_label.visible = true
+			else:
+				info_label.visible = false
 	
 	# When the interact function is presses, player interacts. 
 	if Input.is_action_just_pressed("interact"):
 		if info:
 			# Check which interaction is possible.
 			if can_sleep:
-				new_day()
 				LevelManager.player_position = position
 				LevelManager.save_data()
+				LevelManager.new_day()
 	move_and_slide()
-
-
-func new_day():
-	pass
 
 
 func summon_soundwave():

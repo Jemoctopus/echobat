@@ -5,6 +5,7 @@ extends CharacterBody2D
 @export var time_check_path: Timer
 @export var line_of_sight: RayCast2D
 @export var alarm_visual: Sprite2D
+@export var animation_sprite: AnimatedSprite2D
 
 var player_position: Node
 var player_last_position: Vector2
@@ -35,7 +36,6 @@ func check_player_detection() -> bool:
 		alarm_visual.visible = true
 		return true
 	else:
-		alarm_visual.visible = false
 		return false
 
 
@@ -49,8 +49,9 @@ func _physics_process(delta: float) -> void:
 			velocity = nav_point_direction * movement_speed
 			if velocity.y < 0:
 				velocity.y += 1
-		elif navigation_agent.is_target_reached():
+		else:
 			velocity = Vector2.ZERO
+			alarm_visual.visible = false
 	move_and_slide()
 
 

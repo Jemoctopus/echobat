@@ -30,6 +30,11 @@ var takeaway = 0
 
 
 func _ready() -> void:
+	start_level()
+
+
+
+func start_level() -> void:
 	hidden_layer = get_tree().get_first_node_in_group("hidden_tilemap")
 	dark_layer = get_tree().get_first_node_in_group("dark_tilemap")
 	info_layer = get_tree().get_first_node_in_group("info_tilemap")
@@ -89,9 +94,6 @@ func tilemap_hide() -> void:
 					used_cells[cell] = null
 
 
-func _on_quit_game_pressed() -> void:
-	get_tree().quit()
-
-
-func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/level.scn")
+func new_day() -> void:
+	game_running = false
+	get_tree().change_scene_to_file("res://scenes/new_day.tscn")

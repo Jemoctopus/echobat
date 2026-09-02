@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dpldj0ugv6fyk" path="res://scripts/insect.gd" id="1_yog2j"]
 [ext_resource type="Texture2D" uid="uid://bipl2cl5vxag6" path="res://assets/alarm.png" id="2_bb1u4"]
+[ext_resource type="Texture2D" uid="uid://bpp7bpq3t4dne" path="res://assets/bug_animation/frame_1.png" id="2_ha4tp"]
+[ext_resource type="Texture2D" uid="uid://duygbhqbpxbgl" path="res://assets/bug_animation/frame_2.png" id="3_0w5xf"]
+[ext_resource type="Texture2D" uid="uid://2y3ur4tpspuf" path="res://assets/bug_animation/frame 3.png" id="4_24drg"]
+[ext_resource type="Texture2D" uid="uid://5ejhja7wvehp" path="res://assets/bug_animation/frame 4.png" id="5_0ir27"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yog2j"]
 radius = 4.0
@@ -15,10 +19,30 @@ point_count = 12
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yog2j"]
 size = Vector2(12, 12)
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_u4ifs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ha4tp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_0w5xf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_24drg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_0ir27")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_bb1u4"]
 radius = 4.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "flutter_path", "navigation_agent", "time_check_path", "line_of_sight", "alarm_visual")]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=544168342 node_paths=PackedStringArray("marker_away", "flutter_path", "navigation_agent", "time_check_path", "line_of_sight", "alarm_visual", "animation_sprite")]
 collision_layer = 2
 script = ExtResource("1_yog2j")
 marker_away = NodePath("LineOfSight/Marker2D")
@@ -27,6 +51,7 @@ navigation_agent = NodePath("NavigationAgent2D")
 time_check_path = NodePath("PathTimer")
 line_of_sight = NodePath("LineOfSight")
 alarm_visual = NodePath("Path2D/PathFollow2D/Alarm")
+animation_sprite = NodePath("Path2D/PathFollow2D/AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=566597160]
 shape = SubResource("CircleShape2D_yog2j")
@@ -36,7 +61,6 @@ disabled = true
 path_postprocessing = 1
 avoidance_enabled = true
 max_neighbors = 15
-debug_enabled = true
 
 [node name="PathTimer" type="Timer" parent="." unique_id=1106274555]
 
@@ -59,11 +83,22 @@ position = Vector2(6, -1)
 shape = SubResource("RectangleShape2D_yog2j")
 
 [node name="ColorRect" type="ColorRect" parent="Path2D/PathFollow2D" unique_id=565643536]
+visible = false
 offset_left = 1.7888547
 offset_top = -5.3665633
 offset_right = 9.788855
 offset_bottom = 2.6334367
 metadata/_edit_use_anchors_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Path2D/PathFollow2D" unique_id=635516355]
+position = Vector2(6, -1)
+sprite_frames = SubResource("SpriteFrames_u4ifs")
+frame_progress = 0.37573725
+
+[node name="Alarm" type="Sprite2D" parent="Path2D/PathFollow2D" unique_id=1235753970]
+visible = false
+position = Vector2(6, -16)
+texture = ExtResource("2_bb1u4")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="Path2D/PathFollow2D" unique_id=1744245948]
 collision_layer = 2
@@ -71,10 +106,6 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Path2D/PathFollow2D/RigidBody2D" unique_id=1488996164]
 position = Vector2(6, -1)
 shape = SubResource("CircleShape2D_bb1u4")
-
-[node name="Alarm" type="Sprite2D" parent="Path2D/PathFollow2D" unique_id=1235753970]
-position = Vector2(6, -16)
-texture = ExtResource("2_bb1u4")
 
 [connection signal="timeout" from="PathTimer" to="." method="_on_path_timer_timeout"]
 [connection signal="body_entered" from="Path2D/PathFollow2D/Area2D" to="." method="_body_enter_area"]

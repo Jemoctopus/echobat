@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://r60phxvd7o4"]
 
-[ext_resource type="Script" uid="uid://b1e5vcwg1n1lu" path="res://scripts/level_manager.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://cwynyfwkg3hk0" path="res://scripts/main_menu.gd" id="1_ekxnf"]
 [ext_resource type="StyleBox" uid="uid://dpmx5pqm5ed3r" path="res://assets/button_style.tres" id="2_ekxnf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vue75"]
@@ -11,10 +11,11 @@ content_margin_bottom = 20.0
 
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1393214589]
 follow_viewport_enabled = true
-script = ExtResource("1_l6cm7")
+script = ExtResource("1_ekxnf")
 
 [node name="Control" type="Control" parent="." unique_id=1720654825]
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -0.5
