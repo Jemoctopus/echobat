@@ -13,6 +13,7 @@ const JUMP_VELOCITY = -350.0
 @export var level_tilemap: TileMapLayer ## The tilemap which the player will change
 @export var info_tilemap: TileMapLayer ## The tilemap which gives information to the player to decide actions
 @export var info_label: Label ## The label which tells the player if they can do things
+@export var animations: AnimatedSprite2D ## The sprite which shows the animations
 
 
 var direction_bat_facing = ["left", "right", "up", "down"]
@@ -65,7 +66,8 @@ func _physics_process(delta: float) -> void:
 			direction_current = direction_bat_facing[0]
 		elif direction == 1:
 			direction_current = direction_bat_facing[1]
-		
+		if not is_on_floor():
+			animations.play("flight")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	

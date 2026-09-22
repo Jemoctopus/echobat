@@ -2,12 +2,40 @@
 
 [ext_resource type="Script" uid="uid://cj7alhaqs4vup" path="res://scripts/bat_player.gd" id="1_5n6vd"]
 [ext_resource type="PackedScene" uid="uid://bf7v2o28wtktd" path="res://scenes/soundwave_manager.tscn" id="2_1ny5b"]
+[ext_resource type="Texture2D" uid="uid://e86xf4jgrp0f" path="res://assets/bat_flight_frames/Batsy_smaller-1.png" id="3_yj65y"]
+[ext_resource type="Texture2D" uid="uid://cm0xdxkpn3h5j" path="res://assets/bat_flight_frames/Batsy_smaller-2.png" id="4_3oadu"]
+[ext_resource type="Texture2D" uid="uid://c76tsp7w3k3nq" path="res://assets/bat_flight_frames/Batsy_smaller-3.png" id="5_ugnci"]
+[ext_resource type="Texture2D" uid="uid://dbffofkhlojj7" path="res://assets/bat_flight_frames/Batsy_smaller-4.png" id="6_rrc4o"]
+[ext_resource type="Texture2D" uid="uid://cyjhdjdax424p" path="res://assets/bat_flight_frames/Batsy_smaller-5.png" id="7_aap6t"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
-radius = 8.0
+radius = 6.0
 height = 16.0
 
-[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "up_down_soundwave_spawn", "bat_body", "soundwave_timer", "info_label")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_vd384"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_yj65y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3oadu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ugnci")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_rrc4o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_aap6t")
+}],
+"loop": true,
+"name": &"flight",
+"speed": 8.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "up_down_soundwave_spawn", "bat_body", "soundwave_timer", "info_label", "animations")]
 script = ExtResource("1_5n6vd")
 soundwave_scene = ExtResource("2_1ny5b")
 right_soundwave_spawn = NodePath("Node2D/right Marker")
@@ -16,28 +44,38 @@ up_down_soundwave_spawn = NodePath("Node2D/up_down Marker")
 bat_body = NodePath("Node2D")
 soundwave_timer = NodePath("Soundwave_Timer")
 info_label = NodePath("Label")
+animations = NodePath("AnimatedSprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1842205770]
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_go7nf")
-
-[node name="Node2D" type="Node2D" parent="." unique_id=564757985]
-
-[node name="ColorRect" type="ColorRect" parent="Node2D" unique_id=93982794]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=93982794]
 offset_left = -8.0
 offset_top = -8.0
 offset_right = 8.0
 offset_bottom = 8.0
 color = Color(0.37413925, 0.37413928, 0.37413922, 1)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1842205770]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_go7nf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=153841370]
+position = Vector2(-5, 0)
+sprite_frames = SubResource("SpriteFrames_vd384")
+animation = &"flight"
+frame_progress = 0.8583714
+
+[node name="Node2D" type="Node2D" parent="." unique_id=564757985]
+
 [node name="right Marker" type="Marker2D" parent="Node2D" unique_id=907834147]
+visible = false
 position = Vector2(8, 0)
 rotation = -1.5707964
 
 [node name="left Marker" type="Marker2D" parent="Node2D" unique_id=16018327]
+visible = false
 position = Vector2(-8, 0)
 
 [node name="up_down Marker" type="Marker2D" parent="Node2D" unique_id=1003237949]
+visible = false
 
 [node name="Soundwave_Timer" type="Timer" parent="." unique_id=1618933064]
 
