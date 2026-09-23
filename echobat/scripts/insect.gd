@@ -13,6 +13,7 @@ func _ready() -> void:
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
 	navigation_layer = get_tree().get_first_node_in_group("info_tilemap")
+	nav_tiles = navigation_layer.get_used_cells()
 	time_check_path.start(time_between_checks)
 	var random_flutter_time = randf()
 	flutter_path.progress_ratio = random_flutter_time
@@ -41,11 +42,8 @@ func create_goal():
 		player_last_position = player_position.global_position
 		var goal = marker_away.global_position
 		navigation_agent.target_position = goal
-	#elif navigation_agent.navigation_finished:
-	#	var nav_tiles = navigation_layer.get_used_cells_by_id()
-	#	var random_number = randi_range(0, len(nav_tiles))
-	#	var random_tile = nav_tiles[random_number]
-	#	navigation_agent.target_position = random_tile
+	elif navigation_agent.navigation_finished:
+		random_movement()
 
 
 func _on_path_timer_timeout() -> void:

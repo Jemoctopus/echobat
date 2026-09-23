@@ -29,11 +29,6 @@ var all_dark = false
 var takeaway = 0
 
 
-func _ready() -> void:
-	start_level()
-
-
-
 func start_level() -> void:
 	hidden_layer = get_tree().get_first_node_in_group("hidden_tilemap")
 	dark_layer = get_tree().get_first_node_in_group("dark_tilemap")

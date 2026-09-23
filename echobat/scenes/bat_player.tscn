@@ -2,18 +2,88 @@
 
 [ext_resource type="Script" uid="uid://cj7alhaqs4vup" path="res://scripts/bat_player.gd" id="1_5n6vd"]
 [ext_resource type="PackedScene" uid="uid://bf7v2o28wtktd" path="res://scenes/soundwave_manager.tscn" id="2_1ny5b"]
+[ext_resource type="Texture2D" uid="uid://c6tb3832leocr" path="res://assets/bat_sleep_frames/Batsy_Sleep-1.png" id="3_xdk28"]
 [ext_resource type="Texture2D" uid="uid://e86xf4jgrp0f" path="res://assets/bat_flight_frames/Batsy_smaller-1.png" id="3_yj65y"]
 [ext_resource type="Texture2D" uid="uid://cm0xdxkpn3h5j" path="res://assets/bat_flight_frames/Batsy_smaller-2.png" id="4_3oadu"]
+[ext_resource type="Texture2D" uid="uid://bm4rppopu5qct" path="res://assets/bat_sleep_frames/Batsy_Sleep-2.png" id="4_625es"]
+[ext_resource type="Texture2D" uid="uid://ddtso4sxi382n" path="res://assets/bat_sleep_frames/Batsy_Sleep-3.png" id="5_kimv4"]
 [ext_resource type="Texture2D" uid="uid://c76tsp7w3k3nq" path="res://assets/bat_flight_frames/Batsy_smaller-3.png" id="5_ugnci"]
 [ext_resource type="Texture2D" uid="uid://dbffofkhlojj7" path="res://assets/bat_flight_frames/Batsy_smaller-4.png" id="6_rrc4o"]
+[ext_resource type="Texture2D" uid="uid://weju8wq5kyxy" path="res://assets/bat_sleep_frames/Batsy_Sleep-4.png" id="6_u6cn4"]
+[ext_resource type="Texture2D" uid="uid://b3b1vvhkkp6us" path="res://assets/bat_sleep_frames/Batsy_Sleep-5.png" id="7_2y481"]
 [ext_resource type="Texture2D" uid="uid://cyjhdjdax424p" path="res://assets/bat_flight_frames/Batsy_smaller-5.png" id="7_aap6t"]
+[ext_resource type="Texture2D" uid="uid://bb1aikrfcus84" path="res://assets/bat_sleep_frames/Batsy_Sleep-7.png" id="8_a8r82"]
+[ext_resource type="Texture2D" uid="uid://23p1b1r1rsyp" path="res://assets/bat_sleep_frames/Batsy_Sleep-6.png" id="9_0i5vy"]
+[ext_resource type="Texture2D" uid="uid://tnf573lyv0bb" path="res://assets/bat_walk_frames/Batsy_walk-1.png" id="10_a8r82"]
+[ext_resource type="Texture2D" uid="uid://beqe4545mi531" path="res://assets/bat_walk_frames/Batsy_walk-2.png" id="11_0i5vy"]
+[ext_resource type="Texture2D" uid="uid://d1uqy7s16kkuh" path="res://assets/bat_walk_frames/Batsy_walk-3.png" id="12_dwrit"]
+[ext_resource type="Texture2D" uid="uid://bvfwignycmow2" path="res://assets/bat_walk_frames/Batsy_walk-4.png" id="13_dccho"]
+[ext_resource type="Texture2D" uid="uid://bh32xm36ndkyh" path="res://assets/bat_walk_frames/Batsy_walk-5.png" id="14_qne4b"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_go7nf"]
-radius = 6.0
+radius = 8.0
 height = 16.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vd384"]
 animations = [{
+"frames": [{
+"duration": 4.0,
+"texture": ExtResource("3_xdk28")
+}, {
+"duration": 4.0,
+"texture": ExtResource("4_625es")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_kimv4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_u6cn4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2y481")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a8r82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0i5vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a8r82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0i5vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_a8r82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_0i5vy")
+}],
+"loop": true,
+"name": &"Sleeping",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("10_a8r82")
+}, {
+"duration": 0.5,
+"texture": ExtResource("11_0i5vy")
+}, {
+"duration": 0.5,
+"texture": ExtResource("12_dwrit")
+}, {
+"duration": 0.5,
+"texture": ExtResource("13_dccho")
+}, {
+"duration": 0.5,
+"texture": ExtResource("14_qne4b")
+}],
+"loop": true,
+"name": &"crawling",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_yj65y")
@@ -46,22 +116,16 @@ soundwave_timer = NodePath("Soundwave_Timer")
 info_label = NodePath("Label")
 animations = NodePath("AnimatedSprite2D")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=93982794]
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-color = Color(0.37413925, 0.37413928, 0.37413922, 1)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1842205770]
+position = Vector2(0, 2)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_go7nf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=153841370]
-position = Vector2(-5, 0)
+position = Vector2(-5, 2)
 sprite_frames = SubResource("SpriteFrames_vd384")
 animation = &"flight"
-frame_progress = 0.8583714
+frame_progress = 0.25226697
 
 [node name="Node2D" type="Node2D" parent="." unique_id=564757985]
 
