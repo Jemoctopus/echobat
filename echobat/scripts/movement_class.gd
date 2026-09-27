@@ -22,8 +22,8 @@ var movement_speed = 50
 var nav_tiles
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# Set variables.
 	self.add_to_group("creatures")
 	player_position = get_tree().get_first_node_in_group("player")
 	navigation_layer = get_tree().get_first_node_in_group("info_tilemap")
@@ -41,14 +41,14 @@ func check_player_detection() -> bool:
 		return false
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	# Goes towards player if spotted.
 	player_spotted = check_player_detection()
 	if player_position:
 		line_of_sight.look_at(player_position.global_position)
 		if not navigation_agent.is_target_reached():
 			nav_point_direction = to_local(navigation_agent.get_next_path_position()).normalized()
-			velocity = nav_point_direction * movement_speed * delta
+			velocity = nav_point_direction * movement_speed
 		else:
 			velocity = Vector2.ZERO
 			alarm_visual.visible = false
@@ -56,26 +56,20 @@ func _physics_process(delta: float) -> void:
 
 
 func create_goal() -> void:
-	# Calculates the goal that the creature wants to go to
+	# Calculates the goal that the creature wants to go to.
 	if player_spotted:
 		if navigation_agent.target_position != player_position.global_position:
 			player_last_position = player_position.global_position
 			navigation_agent.target_position = player_last_position
 
 
-func random_movement() -> void:
-	var random_number = randi_range(0, len(nav_tiles))
-	var random_tile = nav_tiles[random_number]
-	navigation_agent.target_position = random_tile
-
-
 func recalculate_goal() -> void:
-	# Every time the timer timeouts we should recalulate the goal
+	# Every time the timer timeouts we should recalulate the goal.
 	create_goal()
 	time_check_path.start(time_between_checks)
 
 
 func alert_position() -> void:
-	# Lets the creature know of the player's position when they echolocate
+	# Lets the creature know of the player's position when they echolocate.
 	player_last_position = player_position.global_position
 	create_goal()

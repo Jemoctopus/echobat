@@ -1,6 +1,6 @@
 extends Node
 
-const save_path: String = "user://save_data1.json"
+const SAVE_PATH: String = "user://save_data1.json"
 
 
 var info_layer: TileMapLayer
@@ -45,21 +45,22 @@ func start_level() -> void:
 	if hidden_layer and dark_layer and info_layer:
 		var all_cells = hidden_layer.get_used_cells()
 		for cell in all_cells:
+			info_layer.erase_cell(cell)
 			dark_layer.set_cell(cell, source_id, current_atlas_id)
 	tilemap_hide()
 
 
 func save_data() -> void:
 	# Saves the data to be stored
-	var file = FileAccess.open(save_path, FileAccess.WRITE)
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	file.store_var(save_file.duplicate())
 	file.close()
 
 
 func load_data() -> void:
 	# Loads the stored data
-	if FileAccess.file_exists(save_path):
-		var file = FileAccess.open(save_path, FileAccess.READ)
+	if FileAccess.file_exists(SAVE_PATH):
+		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
 		var data = file.get_var()
 		file.close()
 		var save_data = data.duplicate()
@@ -67,6 +68,7 @@ func load_data() -> void:
 		save_file[save_file_items[1]] = save_data[save_file_items[1]]
 	else:
 		save_file[save_file_items[0]]
+
 
 func tilemap_hide() -> void:
 	# Hides the tilemap 

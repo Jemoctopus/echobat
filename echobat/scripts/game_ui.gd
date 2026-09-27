@@ -8,6 +8,7 @@ var score_text = "Insects caught:"
 
 
 func _ready() -> void:
+	# Set settings
 	pause_screen.visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
@@ -31,4 +32,5 @@ func _on_pause_button_button_down() -> void:
 
 
 func update_label() -> void:
+	# Updates the insect score. 
 	score_counter.text = score_text

@@ -17,6 +17,7 @@ const JUMP_VELOCITY = -250.0
 
 var direction_bat_facing = ["left", "right", "up", "down"]
 var direction_current = direction_bat_facing[1]
+var current_direction = "right"
 var time_between_soundwaves = 0.5
 var can_shoot_soundwave = true
 var left_marker_tiles
@@ -26,6 +27,10 @@ var right_setpoint
 var used_cells = []
 var marker_tiles
 var can_sleep = false
+var sleep_wait = 3
+
+
+var label_text = ["press E to sleep", "Your game has been saved."]
 
 @onready var current_position = info_tilemap.local_to_map(bat_body.global_position)
 @onready var info : TileData = info_tilemap.get_cell_tile_data(current_position)
@@ -33,6 +38,7 @@ var can_sleep = false
 
 func _ready() -> void:
 	# Load data and starting position
+	info_label.text = label_text[0]
 	LevelManager.load_data()
 	position = LevelManager.save_file[LevelManager.save_file_items[0]]
 
@@ -68,14 +74,20 @@ func _physics_process(delta: float) -> void:
 			direction_current = direction_bat_facing[1]
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-		animations.pause()
 	
+	# The Animation guide
 	if is_on_floor() or is_on_ceiling() or is_on_wall() and velocity > Vector2(0,0):
 			animations.play("crawling")
-	
+	if velocity == Vector2.ZERO:
+		animations.pause()
 	else:
-		animations.play("flight")
+		if direction:
+			if direction == -1:
+				animations.play("flight_left")
+			elif direction == 1:
+				animations.play("flight_right")
 	
+	# Shoots the soundwave so the user can see
 	if Input.is_action_just_pressed("fire_soundwave"):
 		if can_shoot_soundwave:
 			summon_soundwave()
@@ -96,18 +108,25 @@ func _physics_process(delta: float) -> void:
 				info_label.visible = true
 			else:
 				info_label.visible = false
+		else:
+			info_label.visible = false
 	
 	# When the interact function is presses, player interacts. 
 	if Input.is_action_just_pressed("interact"):
 		if info:
 			# Check which interaction is possible.
 			if can_sleep:
+				animations.play("sleeping")
+				info_label.text = label_text[1]
 				LevelManager.save_file[LevelManager.save_file_items[0]] = position
 				LevelManager.save_data()
+				await get_tree().create_timer(sleep_wait).timeout
+				info_label.text = label_text[0]
 	move_and_slide()
 
 
 func summon_soundwave():
+	# Summons the soundwave from the currect direction
 	var soundwave = soundwave_scene.instantiate()
 	if direction_current == direction_bat_facing[0]:
 		soundwave.position = right_soundwave_spawn.global_position
@@ -121,4 +140,5 @@ func summon_soundwave():
 
 
 func _on_soundwave_timer_timeout() -> void:
+	# Soundwave limit to prevent lag
 	can_shoot_soundwave = true

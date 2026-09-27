@@ -44,8 +44,6 @@ func create_goal():
 		player_last_position = player_position.global_position
 		var goal = marker_away.global_position
 		navigation_agent.target_position = goal
-	elif navigation_agent.navigation_finished:
-		random_movement()
 
 
 func _on_path_timer_timeout() -> void:

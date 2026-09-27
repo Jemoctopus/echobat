@@ -12,10 +12,15 @@
 [ext_resource type="Texture2D" uid="uid://dbffofkhlojj7" path="res://assets/bat_flight_frames/Batsy_smaller-4.png" id="6_rrc4o"]
 [ext_resource type="Texture2D" uid="uid://cyjhdjdax424p" path="res://assets/bat_flight_frames/Batsy_smaller-5.png" id="7_aap6t"]
 [ext_resource type="Texture2D" uid="uid://cmq5mmrgdi76b" path="res://assets/bat_sleep_frames/frame0004.png" id="7_dccho"]
+[ext_resource type="Texture2D" uid="uid://bcc45x2d2mamd" path="res://assets/bat_flight_frames/left_frame0000.png" id="8_3x6x6"]
 [ext_resource type="Texture2D" uid="uid://d4bk1djr4hsl7" path="res://assets/bat_sleep_frames/frame0005.png" id="8_qne4b"]
+[ext_resource type="Texture2D" uid="uid://d3cei17unm1to" path="res://assets/bat_flight_frames/left_frame0001.png" id="9_2swaa"]
+[ext_resource type="Texture2D" uid="uid://c31gyaupu3ss2" path="res://assets/bat_flight_frames/left_frame0002.png" id="10_6oaqg"]
 [ext_resource type="Texture2D" uid="uid://tnf573lyv0bb" path="res://assets/bat_walk_frames/Batsy_walk-1.png" id="10_a8r82"]
 [ext_resource type="Texture2D" uid="uid://beqe4545mi531" path="res://assets/bat_walk_frames/Batsy_walk-2.png" id="11_0i5vy"]
+[ext_resource type="Texture2D" uid="uid://p7piot4lqpmt" path="res://assets/bat_flight_frames/left_frame0003.png" id="11_yrfax"]
 [ext_resource type="Texture2D" uid="uid://d1uqy7s16kkuh" path="res://assets/bat_walk_frames/Batsy_walk-3.png" id="12_dwrit"]
+[ext_resource type="Texture2D" uid="uid://bonklm2djkh2p" path="res://assets/bat_flight_frames/left_frame0004.png" id="12_xkqyg"]
 [ext_resource type="Texture2D" uid="uid://bvfwignycmow2" path="res://assets/bat_walk_frames/Batsy_walk-4.png" id="13_dccho"]
 [ext_resource type="Texture2D" uid="uid://bh32xm36ndkyh" path="res://assets/bat_walk_frames/Batsy_walk-5.png" id="14_qne4b"]
 
@@ -25,29 +30,6 @@ height = 14.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vd384"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_2y481")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_a8r82")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_0i5vy")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_dwrit")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_dccho")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_qne4b")
-}],
-"loop": true,
-"name": &"Sleeping",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 0.5,
 "texture": ExtResource("10_a8r82")
@@ -70,6 +52,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("8_3x6x6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2swaa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_6oaqg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_yrfax")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_xkqyg")
+}],
+"loop": true,
+"name": &"flight_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("3_yj65y")
 }, {
 "duration": 1.0,
@@ -85,8 +87,31 @@ animations = [{
 "texture": ExtResource("7_aap6t")
 }],
 "loop": true,
-"name": &"flight",
+"name": &"flight_right",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2y481")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_a8r82")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_0i5vy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dwrit")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_dccho")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qne4b")
+}],
+"loop": true,
+"name": &"sleeping",
+"speed": 5.0
 }]
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1353722318 node_paths=PackedStringArray("right_soundwave_spawn", "left_soundwave_spawn", "up_down_soundwave_spawn", "bat_body", "soundwave_timer", "info_label", "animations")]
@@ -106,9 +131,10 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_go7nf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=153841370]
-position = Vector2(-5, 4)
+position = Vector2(1, 4)
 sprite_frames = SubResource("SpriteFrames_vd384")
-animation = &"crawling"
+animation = &"flight_left"
+frame_progress = 0.93515146
 
 [node name="Node2D" type="Node2D" parent="." unique_id=564757985]
 

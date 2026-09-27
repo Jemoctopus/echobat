@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://btxlqrejgwnn5"]
 
-[ext_resource type="Script" uid="uid://le0ts8rnlwwj" path="res://scenes/game_ui.gd" id="1_u001w"]
+[ext_resource type="Script" uid="uid://le0ts8rnlwwj" path="res://scripts/game_ui.gd" id="1_u001w"]
 [ext_resource type="Texture2D" uid="uid://uoyb33d4r2aj" path="res://assets/pause_button.png" id="1_yubou"]
 [ext_resource type="StyleBox" uid="uid://dpmx5pqm5ed3r" path="res://assets/button_style.tres" id="2_rns2u"]
 
