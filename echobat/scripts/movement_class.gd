@@ -48,9 +48,7 @@ func _physics_process(delta: float) -> void:
 		line_of_sight.look_at(player_position.global_position)
 		if not navigation_agent.is_target_reached():
 			nav_point_direction = to_local(navigation_agent.get_next_path_position()).normalized()
-			velocity = nav_point_direction * movement_speed
-			if velocity.y < 0:
-				velocity.y += 1
+			velocity = nav_point_direction * movement_speed * delta
 		else:
 			velocity = Vector2.ZERO
 			alarm_visual.visible = false
