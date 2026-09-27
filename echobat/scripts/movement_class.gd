@@ -63,15 +63,12 @@ func create_goal() -> void:
 		if navigation_agent.target_position != player_position.global_position:
 			player_last_position = player_position.global_position
 			navigation_agent.target_position = player_last_position
-	elif navigation_agent.navigation_finished:
-		random_movement()
 
 
 func random_movement() -> void:
-	pass
-	#var random_number = randi_range(0, len(nav_tiles))
-	#var random_tile = nav_tiles[random_number]
-	#navigation_agent.target_position = random_tile
+	var random_number = randi_range(0, len(nav_tiles))
+	var random_tile = nav_tiles[random_number]
+	navigation_agent.target_position = random_tile
 
 
 func recalculate_goal() -> void:

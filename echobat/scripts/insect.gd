@@ -8,6 +8,7 @@ var speed_of_flutter = 0.02
 
 
 func _ready() -> void:
+	# Set variables
 	movement_speed = 100
 	player_spotted = check_player_detection()
 	self.add_to_group("creatures")
@@ -15,6 +16,7 @@ func _ready() -> void:
 	navigation_layer = get_tree().get_first_node_in_group("info_tilemap")
 	nav_tiles = navigation_layer.get_used_cells()
 	time_check_path.start(time_between_checks)
+	# Random movement
 	var random_flutter_time = randf()
 	flutter_path.progress_ratio = random_flutter_time
 	animation_sprite.frame_progress = random_flutter_time
@@ -52,4 +54,5 @@ func _on_path_timer_timeout() -> void:
 
 func _body_enter_area(body: Node2D) -> void:
 	if body == player_position:
+		LevelManager.save_file[LevelManager.save_file_items[1]] += 1
 		queue_free()

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-const SPEED = 200.0
-const JUMP_VELOCITY = -350.0
+const SPEED = 250.0
+const JUMP_VELOCITY = -250.0
 
 @export var soundwave_scene: PackedScene ## The soundwave that the bat shoots
 @export var right_soundwave_spawn: Node2D ## The right marker in which we spawn the soundwaves from 
@@ -14,7 +14,6 @@ const JUMP_VELOCITY = -350.0
 @export var info_tilemap: TileMapLayer ## The tilemap which gives information to the player to decide actions
 @export var info_label: Label ## The label which tells the player if they can do things
 @export var animations: AnimatedSprite2D ## The sprite which shows the animations
-
 
 var direction_bat_facing = ["left", "right", "up", "down"]
 var direction_current = direction_bat_facing[1]
@@ -33,8 +32,9 @@ var can_sleep = false
 
 
 func _ready() -> void:
+	# Load data and starting position
 	LevelManager.load_data()
-	position = LevelManager.player_position
+	position = LevelManager.save_file[LevelManager.save_file_items[0]]
 
 
 func _physics_process(delta: float) -> void:
@@ -42,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor() and not is_on_ceiling() and not is_on_wall():
 		velocity += get_gravity() * delta
 
-	# Handle jump.
+	# Handle flight and climbing on walls/ceilings.
 	if Input.is_action_pressed("ui_up"):
 		velocity.y = JUMP_VELOCITY
 		direction_current = direction_bat_facing[2]
@@ -54,11 +54,11 @@ func _physics_process(delta: float) -> void:
 		if is_on_ceiling() or is_on_wall():
 			velocity.y = -JUMP_VELOCITY
 	else:
+		animations.pause()
 		if is_on_wall():
 			velocity.y = 0
 
 	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var direction := Input.get_axis("ui_left", "ui_right")
 	if direction:
 		velocity.x = direction * SPEED
@@ -66,10 +66,15 @@ func _physics_process(delta: float) -> void:
 			direction_current = direction_bat_facing[0]
 		elif direction == 1:
 			direction_current = direction_bat_facing[1]
-		if not is_on_floor():
-			animations.play("flight")
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		animations.pause()
+	
+	if is_on_floor() or is_on_ceiling() or is_on_wall() and velocity > Vector2(0,0):
+			animations.play("crawling")
+	
+	else:
+		animations.play("flight")
 	
 	if Input.is_action_just_pressed("fire_soundwave"):
 		if can_shoot_soundwave:
@@ -97,9 +102,8 @@ func _physics_process(delta: float) -> void:
 		if info:
 			# Check which interaction is possible.
 			if can_sleep:
-				LevelManager.player_position = position
+				LevelManager.save_file[LevelManager.save_file_items[0]] = position
 				LevelManager.save_data()
-				LevelManager.new_day()
 	move_and_slide()
 
 

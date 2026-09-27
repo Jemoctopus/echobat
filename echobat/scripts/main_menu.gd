@@ -1,10 +1,19 @@
 extends CanvasLayer
 
 
+var player_start_position = Vector2(-6099, -763)
+
+
 func _on_play_pressed() -> void:
-	LevelManager.start_level()
 	get_tree().change_scene_to_file("res://scenes/level.scn")
 
 
 func _on_quit_game_pressed() -> void:
 	get_tree().quit()
+
+
+func _on_new_game_button_down() -> void:
+	LevelManager.save_file.player_position = player_start_position
+	LevelManager.save_file.insects_eaten = 0
+	LevelManager.save_data()
+	get_tree().change_scene_to_file("res://scenes/level.scn")

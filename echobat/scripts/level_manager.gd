@@ -1,13 +1,21 @@
 extends Node
 
+const save_path: String = "user://save_data1.json"
+
+
 var info_layer: TileMapLayer
 var hidden_layer: TileMapLayer
 var dark_layer: TileMapLayer
 var game_running = true
 
 # Save variables
-var save_path: String = "user://save_data.save"
+var save_file: Dictionary = {
+	"player_position" : Vector2(-6099, -763),
+	"insects_eaten" : 0
+}
+var save_file_items = ["player_position", "insects_eaten"]
 var player_position: Vector2
+var insects_eaten: int
 
 # Variables to do with the cells
 var pause_between_tilemap_hides = 2 ## The delay between the different soundwaves.
@@ -34,7 +42,7 @@ func start_level() -> void:
 	dark_layer = get_tree().get_first_node_in_group("dark_tilemap")
 	info_layer = get_tree().get_first_node_in_group("info_tilemap")
 	# Creates the base layer from the hidden layer, so I don't have to create an identical layer. 
-	if hidden_layer and dark_layer:
+	if hidden_layer and dark_layer and info_layer:
 		var all_cells = hidden_layer.get_used_cells()
 		for cell in all_cells:
 			dark_layer.set_cell(cell, source_id, current_atlas_id)
@@ -44,17 +52,21 @@ func start_level() -> void:
 func save_data() -> void:
 	# Saves the data to be stored
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
-	file.store_var(player_position)
+	file.store_var(save_file.duplicate())
+	file.close()
 
 
 func load_data() -> void:
 	# Loads the stored data
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)
-		player_position = file.get_var()
+		var data = file.get_var()
+		file.close()
+		var save_data = data.duplicate()
+		save_file[save_file_items[0]] = save_data[save_file_items[0]]
+		save_file[save_file_items[1]] = save_data[save_file_items[1]]
 	else:
-		player_position  = Vector2.ZERO
-
+		save_file[save_file_items[0]]
 
 func tilemap_hide() -> void:
 	# Hides the tilemap 
@@ -87,8 +99,3 @@ func tilemap_hide() -> void:
 							dark_layer.set_cell(current_cell, source_id, atlas_id_dict[atlas_id_order[atlas_ids]])
 				else:
 					used_cells[cell] = null
-
-
-func new_day() -> void:
-	game_running = false
-	get_tree().change_scene_to_file("res://scenes/new_day.tscn")

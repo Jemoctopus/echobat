@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm4rppopu5qct"
-path="res://.godot/imported/Batsy_Sleep-2.png-294fe8c5a6b9675c3b9e15d96ed40dbe.ctex"
+uid="uid://bclfu3xhgg1q"
+path="res://.godot/imported/frame0011.png-9a31cce08eba031e6d3bab272766ab4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/bat_sleep_frames/Batsy_Sleep-2.png"
-dest_files=["res://.godot/imported/Batsy_Sleep-2.png-294fe8c5a6b9675c3b9e15d96ed40dbe.ctex"]
+source_file="res://assets/owl_fly/frame0011.png"
+dest_files=["res://.godot/imported/frame0011.png-9a31cce08eba031e6d3bab272766ab4c.ctex"]
 
 [params]
 

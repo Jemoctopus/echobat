@@ -1,13 +1,69 @@
 [gd_scene format=3 uid="uid://0mchir53235e"]
 
 [ext_resource type="Script" uid="uid://va05ecir76ip" path="res://scripts/owl.gd" id="1_a0qig"]
+[ext_resource type="Texture2D" uid="uid://dilbk21tco4mt" path="res://assets/owl_fly/frame0000.png" id="2_8ugme"]
 [ext_resource type="Texture2D" uid="uid://bipl2cl5vxag6" path="res://assets/alarm.png" id="2_ri17u"]
+[ext_resource type="Texture2D" uid="uid://ckp0gq8x08lw1" path="res://assets/owl_fly/frame0001.png" id="3_j7wcc"]
+[ext_resource type="Texture2D" uid="uid://bkj6vewy8fdqy" path="res://assets/owl_fly/frame0002.png" id="4_ml6dk"]
+[ext_resource type="Texture2D" uid="uid://dgwjquxgbt2kb" path="res://assets/owl_fly/frame0003.png" id="5_bgxlc"]
+[ext_resource type="Texture2D" uid="uid://txb3wk1kwulj" path="res://assets/owl_fly/frame0004.png" id="6_472yi"]
+[ext_resource type="Texture2D" uid="uid://66xjo238mr40" path="res://assets/owl_fly/frame0005.png" id="7_8y1cx"]
+[ext_resource type="Texture2D" uid="uid://i3o13my5rofd" path="res://assets/owl_fly/frame0006.png" id="8_lygq2"]
+[ext_resource type="Texture2D" uid="uid://cpuhk4ripoass" path="res://assets/owl_fly/frame0007.png" id="9_q4c4h"]
+[ext_resource type="Texture2D" uid="uid://bhxbuj22svoel" path="res://assets/owl_fly/frame0008.png" id="10_ydcrc"]
+[ext_resource type="Texture2D" uid="uid://dopbv2v51vhnd" path="res://assets/owl_fly/frame0009.png" id="11_k5pku"]
+[ext_resource type="Texture2D" uid="uid://bfhagr0jfgfwy" path="res://assets/owl_fly/frame0010.png" id="12_2wd07"]
+[ext_resource type="Texture2D" uid="uid://bclfu3xhgg1q" path="res://assets/owl_fly/frame0011.png" id="13_1jqyq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lsvy4"]
-radius = 19.0
+radius = 12.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4x5bk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_8ugme")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j7wcc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ml6dk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bgxlc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_472yi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_8y1cx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_lygq2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_q4c4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ydcrc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_k5pku")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_2wd07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_1jqyq")
+}],
+"loop": true,
+"name": &"Flight",
+"speed": 5.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_a0qig"]
-radius = 20.09975
+radius = 14.035668
 
 [node name="CharacterBody2D" type="CharacterBody2D" unique_id=1972277350 node_paths=PackedStringArray("navigation_agent", "time_check_path", "line_of_sight", "alarm_visual")]
 script = ExtResource("1_a0qig")
@@ -19,11 +75,9 @@ alarm_visual = NodePath("Alarm")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2093560563]
 shape = SubResource("CircleShape2D_lsvy4")
 
-[node name="ColorRect" type="ColorRect" parent="CollisionShape2D" unique_id=1272057538]
-offset_left = -19.0
-offset_top = -19.0
-offset_right = 19.0
-offset_bottom = 19.0
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CollisionShape2D" unique_id=352726254]
+sprite_frames = SubResource("SpriteFrames_4x5bk")
+animation = &"Flight"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1438026965]
 path_desired_distance = 10.0
